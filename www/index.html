@@ -25,29 +25,9 @@
     <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
   </head>
-  <body  ng-app="myApp" ng-controller="tchatController">
+  <body  ng-app="myApp">
 
-    <!-- CHAT MARKUP -->
-    <div class="example-chat l-demo-container">
-      <header>Firebase Chat Demo</header>
-
-      
-
-      <ul id="example-messages" class="example-chat-messages">
-        <li ng-repeat="msg in messages">
-          <strong class="example-chat-username">{{ msg.from }}</strong>
-          {{ msg.body }}
-        </li>
-      </ul>
-      
-      <div class="example-chat-toolbar">
-        <label for="nameInput">Username:</label>
-        <input ng-model="name" type="text" id="nameInput" placeholder="enter a username...">
-      </div>
-
-      <footer>
-        <input ng-model="msg" ng-keydown="addMessage($event)" type="text" id="messageInput"  placeholder="Type a message...">
-      </footer>
-    </div>
+    <ion-nav-view></ion-nav-view>
+    
   </body>
 </html>

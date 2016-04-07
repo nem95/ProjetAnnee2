@@ -3,7 +3,7 @@ angular.module("HomeController", ["firebase"])
   .controller("tchatController", ["$scope", "$firebaseArray",
     function($scope, $firebaseArray) {
       //CREATE A FIREBASE REFERENCE
-      var ref = new Firebase("https://shining-heat-2587.firebaseio.com/");
+      var ref = new Firebase("https://shining-heat-2587.firebaseio.com/user");
 
       // GET MESSAGES AS AN ARRAY
       $scope.messages = $firebaseArray(ref);

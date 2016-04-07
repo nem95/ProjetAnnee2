@@ -1,5 +1,25 @@
 <ion-view view-title='Home'>
   <ion-content ng-controller="tchatController" class="padding">
+  	<div class="example-chat l-demo-container">
+      <header>Firebase Chat Demo</header>
 
+      
+
+      <ul id="example-messages" class="example-chat-messages">
+        <li ng-repeat="msg in messages">
+          <strong class="example-chat-username">{{ msg.from }}</strong>
+          {{ msg.body }}
+        </li>
+      </ul>
+      
+      <div class="example-chat-toolbar">
+        <label for="nameInput">Username:</label>
+        <input ng-model="name" type="text" id="nameInput" placeholder="enter a username...">
+      </div>
+
+      <footer>
+        <input ng-model="msg" ng-keydown="addMessage($event)" type="text" id="messageInput"  placeholder="Type a message...">
+      </footer>
+    </div>
   </ion-content>	
 </ion-view>	

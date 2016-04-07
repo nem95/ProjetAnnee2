@@ -22,3 +22,17 @@ angular.module('myApp', ['ionic','HomeController'])
     }
   });
 })
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/')
+
+  $stateProvider.state('home', {
+      url: '/',
+      templateUrl: 'templates/home.html'
+    })
+
+    $stateProvider.state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html'
+    })
+})
