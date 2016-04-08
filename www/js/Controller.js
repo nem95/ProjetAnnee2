@@ -1,4 +1,4 @@
-angular.module("HomeController", ["firebase"])
+angular.module("HomeController", ["firebase",'leaflet-directive'])
 
   .controller('mainController', function($scope, $ionicModal, $timeout, $state, $ionicHistory) {
       $scope.toggleLeft = function() {
