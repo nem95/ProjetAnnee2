@@ -164,11 +164,14 @@ angular.module("HomeController", ["firebase",'leaflet-directive'])
     $scope.users = $firebaseArray(ref);
 
   })
-  
+
   .controller('geoCtrl',['$scope', function ($scope) {
     angular.extend($scope, {
       center: {
-        autoDiscover: true
+        lat: 40.095,
+        lng: -3.823,
+        zoom: 15,
+        autoDiscover: false
       }
     });
   }])
