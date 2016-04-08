@@ -40,4 +40,9 @@ angular.module('myApp', ['ionic','HomeController'])
     url: '/login',
     templateUrl: 'templates/login.html'
   })
+
+  $stateProvider.state('profil', {
+    url: '/profil',
+    templateUrl: 'templates/profil.html'
+  })
 })
