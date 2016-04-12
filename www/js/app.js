@@ -48,6 +48,6 @@ angular.module('myApp', ['ionic','HomeController'])
   $stateProvider.state('map', {
     url: '/map',
     templateUrl: 'templates/map.html',
-    controller:'geoCtrl',
+    controller:'mapCtrl',
   })
 })

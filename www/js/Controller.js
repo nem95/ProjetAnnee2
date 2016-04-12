@@ -1,4 +1,4 @@
-angular.module("HomeController", ["firebase",'leaflet-directive'])
+angular.module("HomeController", ["firebase"])
 
   .controller('mainController', function($scope, $ionicModal, $timeout, $state, $ionicHistory) {
       $scope.toggleLeft = function() {
@@ -13,21 +13,21 @@ angular.module("HomeController", ["firebase",'leaflet-directive'])
 
       // GET MESSAGES AS AN ARRAY
       $scope.messages = $firebaseArray(ref);
-      console.log($scope.messages);
+     // console.log($scope.messages);
       //$scope.users = $firebaseArray(users);
 
       //getAuth verifie si l'user est connecter et renvoie son uid
       var authData = ref.getAuth();
-      console.log(authData);
+      //console.log(authData);
 
         ref.once("value", function(snapshot) {
           var hasName = snapshot.hasChild("message");
           // hasName === true
-            console.log(hasName);
+            //console.log(hasName);
 
         });
-      
-      //test authData a supprimer a la fin 
+
+      //test authData a supprimer a la fin
       if (authData) {
         console.log("User " + authData.uid + " is logged in with " + authData.provider);
       } else {
@@ -36,7 +36,7 @@ angular.module("HomeController", ["firebase",'leaflet-directive'])
 
      /* ref.once("value", function(snapshot) {
         var data = snapshot.val();
-        console.log(data.user.name);  
+        console.log(data.user.name);
       });*/
 
       if (authData) {
@@ -49,7 +49,7 @@ angular.module("HomeController", ["firebase",'leaflet-directive'])
       $scope.addMessage = function(e) {
       var authData = ref.getAuth();
       console.log(authData.uid);
-      
+
 
 
 
@@ -59,7 +59,7 @@ angular.module("HomeController", ["firebase",'leaflet-directive'])
          // if (authData.uid == ) {};
          ref.once("value", function(snapshot) {
           var data = snapshot.val();
-          console.log(data); 
+          console.log(data);
         });
 
           var name = $scope.name || "anonymous";
@@ -131,12 +131,12 @@ angular.module("HomeController", ["firebase",'leaflet-directive'])
               $location.path('login');
               console.log("Successfully created user account with uid:", userData.uid);
             }
-            
+
           }
         });
       };
-    }      
-    
+    }
+
   ])
 
   .controller("loginController", ["$scope", "$firebaseArray","$firebaseAuth", "$location",
@@ -165,16 +165,15 @@ angular.module("HomeController", ["firebase",'leaflet-directive'])
 
   })
 
-  .controller('geoCtrl',['$scope', function ($scope) {
-    angular.extend($scope, {
-      center: {
-        lat: 40.095,
-        lng: -3.823,
-        zoom: 15,
-        autoDiscover: false
-      }
-    });
-  }])
+  .controller('mapCtrl', function ($scope) {
+    $scope.map = L.map('map').setView([51.505, -0.09], 13)
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+      id: 'vasach.plk1gn8n',
+      accessToken: 'pk.eyJ1IjoidmFzYWNoIiwiYSI6ImNpbXhxNWZnajAwZWJ3OGx5ZW5oam5jc2UifQ.jxlQK5wu7ByHtTk_WD_KRg'
+    }).addTo($scope.map);
+  })
 
 
   
