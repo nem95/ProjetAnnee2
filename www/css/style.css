@@ -1,4 +1,5 @@
 /* Empty. Add your own CSS if you like */
-#map { height: 480px;
+#map {
+    height: 350px;
     width: 100%;
 }

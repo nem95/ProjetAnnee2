@@ -173,6 +173,16 @@ angular.module("HomeController", ["firebase"])
       id: 'vasach.plk1gn8n',
       accessToken: 'pk.eyJ1IjoidmFzYWNoIiwiYSI6ImNpbXhxNWZnajAwZWJ3OGx5ZW5oam5jc2UifQ.jxlQK5wu7ByHtTk_WD_KRg'
     }).addTo($scope.map);
+
+    $scope.location=function(){
+      $scope.map.locate({setView: true});
+    }
+    function onLocationFound(e) {
+      L.marker(e.latlng).addTo($scope.map)
+
+    }
+
+    $scope.map.on('locationfound', onLocationFound);
   })
 
 
