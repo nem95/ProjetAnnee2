@@ -1,12 +1,16 @@
 <ion-view view-title='Map'>
     <ion-content class="padding">
-        <div id="map"></div>
+      <!--  <div data-tap-disabled="true">
+            <div id="map"></div>
+        </div>
         <button ng-click="location()" class="button button-positive">
             Localiser
-        </button>
-        <!--<div data-tap-disabled="true">
-            <leaflet lf-center="center" height="480px" width="100%" ></leaflet>
+        </button>-->
+
+
+      <div data-tap-disabled="true">
+            <leaflet lf-center="center"  layers="layers"height="480px" width="100%" ></leaflet>
         </div>
-        <button ng-click="center.autoDiscover=true">ma position</button>-->
+        <button ng-click="center.autoDiscover=true" class="button button-positive">ma position</button>
     </ion-content>
 </ion-view>
