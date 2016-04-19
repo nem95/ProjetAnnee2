@@ -175,7 +175,7 @@ angular.module("HomeController", ["firebase"])
     }).addTo($scope.map);
 
     $scope.location=function(){
-      $scope.map.locate({setView: true});
+      $scope.map.locate({setView: true, maxZoom: 15});
     }
     function onLocationFound(e) {
       L.marker(e.latlng).addTo($scope.map)
@@ -184,6 +184,3 @@ angular.module("HomeController", ["firebase"])
 
     $scope.map.on('locationfound', onLocationFound);
   })
-
-
-  
