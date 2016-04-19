@@ -1,4 +1,4 @@
-angular.module("HomeController", ["firebase"])
+angular.module("HomeController", ["firebase",'nemLogging',"ui-leaflet"])
 
   .controller('mainController', function($scope, $ionicModal, $timeout, $state, $ionicHistory) {
       $scope.toggleLeft = function() {
@@ -164,8 +164,34 @@ angular.module("HomeController", ["firebase"])
     $scope.users = $firebaseArray(ref);
 
   })
+    .controller('mapCtrl',['$scope',function($scope){
+      angular.extend($scope,{
 
-  .controller('mapCtrl', function ($scope) {
+        layers: {
+          baselayers: {
+            mapbox_light: {
+              name: 'Mapbox Light',
+              url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+              type: 'xyz',
+              layerOptions: {
+                apikey: 'pk.eyJ1IjoidmFzYWNoIiwiYSI6ImNpbXhxNWZnajAwZWJ3OGx5ZW5oam5jc2UifQ.jxlQK5wu7ByHtTk_WD_KRg',
+                mapid: 'vasach.plk1gn8n'
+              }
+            },
+          }
+        },
+
+        center: {
+          lat: 48.019324184801185,
+          lng: 3.427734375,
+          zoom: 8,
+          autoDiscover: false
+        },
+
+      })
+    }])
+
+  /*.controller('mapCtrl', function ($scope) {
     $scope.map = L.map('map').setView([51.505, -0.09], 13)
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -177,10 +203,21 @@ angular.module("HomeController", ["firebase"])
     $scope.location=function(){
       $scope.map.locate({setView: true, maxZoom: 15});
     }
-    function onLocationFound(e) {
+    /*function onLocationFound(e) {
       L.marker(e.latlng).addTo($scope.map)
 
     }
+    function onLocationError(e) {
+      alert(e.message);
+    }
 
     $scope.map.on('locationfound', onLocationFound);
+<<<<<<< HEAD
   })
+=======
+    $scope.map.on('locationfound', onLocationError);
+  })*/
+
+
+  
+>>>>>>> 598fc17325c59f346bcb1b6ac8f2fe69f60cad8d
