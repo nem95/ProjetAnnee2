@@ -220,4 +220,4 @@ angular.module("HomeController", ["firebase",'nemLogging',"ui-leaflet"])
 
 
   
->>>>>>> 598fc17325c59f346bcb1b6ac8f2fe69f60cad8d
+//>>>>>>> 598fc17325c59f346bcb1b6ac8f2fe69f60cad8d
