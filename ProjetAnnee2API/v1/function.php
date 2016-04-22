@@ -1,16 +1,28 @@
 <?php
-	require_once('../../stripe-php/init.php');
+
 	$app->map('/:x+', function($x) {http_response_code(200);})->via('OPTIONS');
 
 
 	//$pdo = new pdo("mysql:dbname=db317889_tim;host=db317889-tim.sql-pro.online.net","db82530","supercon18");
 	//$pdo = new pdo("mysql:dbname=voixture;host=localhost","root","");
 
-	$bddLocal = "voixture";
+	$bddLocal = "projetannee2";
 
 	/* ############################################################ VOIXTURE ############################################################################# */
 
-																					/*#################### NAVIGATEUR ###################### */
+	$app->post('/addUser', function() use ($app)  {
+		$param = json_decode($app->request->getBody());
+		$prenom = $param->firstname;
+		$nom = $param->name;
+		$email =  $param->email;
+		$password = $param->password;
+
+		$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+		$statement = $pdo->prepare("INSERT INTO `projetannee2`.`user` (`prenom`,`nom`,`email`,`password`) VALUES (?,?,?,?)");
+		$statement->execute(array($prenom,$nom,$email,$password));
+		$row["message"] = "Bienvenue .";
+		echoResponse(200, $row);
+	});
 
 			$app->post('/login',function() use ($app)  {
 				$param = json_decode($app->request->getBody());
@@ -199,21 +211,7 @@
 				echoResponse(200, $tableauCourses);
 			});
 
-				$app->post('/addClient', function() use ($app)  {
-					$param = json_decode($app->request->getBody());
-					$nom = $param->nom;
-					$prenom = $param->prenom;
-					$password = $param->password;
-					$email =  $param->email;
-					$telephone =  $param->telephone;
 
-
-					$pdo = new pdo("mysql:dbname=voixture;host=localhost","root","");
-					$statement = $pdo->prepare("INSERT INTO `voixture`.`clients` (`nom_client`,`prenom_client`,`password_client`,`email_client`,`telephone_client`) VALUES (?,?,?,?,?)");
-					$statement->execute(array($nom,$prenom,$password,$email,$telephone));
-					$row["message"] = "Bienvenue chez Voixture '$prenom' '$nom'.";
-					echoResponse(200, $row);
-				});
 
 				$app->post('/addFav', function() use ($app)  {
 					$param = json_decode($app->request->getBody());
