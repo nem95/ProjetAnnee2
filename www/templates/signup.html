@@ -1,30 +1,31 @@
 <ion-view view-title='Inscription'>
   <ion-content ng-controller="singinController" class="padding">
-
-  	<div class="example-chat l-demo-container">
-
-      <div class="example-chat-toolbar">
-        <label for="nameInput">Prénom:</label>
-        <input ng-model="firstname" type="text" id="firstnameInput" placeholder="Prénom">
+    <div class="col-md-12"><h1>S'inscrire</h1></div>
+    <div class="col-sm-4">
+      <div class="form-group">
+          <input type="text" value="" placeholder="Prénom" class="form-control" />
       </div>
-
-      <div class="example-chat-toolbar">
-        <label for="nameInput">Nom:</label>
-        <input ng-model="name" type="text" id="nameInput" placeholder="Nom">
-      </div>
-
-      <div class="example-chat-toolbar">
-        <label for="nameInput">Email:</label>
-        <input ng-model="mail" type="text" id="mailInput" placeholder="Nom">
-      </div>
-
-      <div class="example-chat-toolbar">
-        <label for="nameInput">Password:</label>
-        <input ng-model="password" type="password" id="passwordInput" placeholder="Nom">
-      </div>
-
-      <button type="button" ng-click="signUp();" class="btn btn-lg btn-primary btn-block">Register</button>
     </div>
 
-  </ion-content>	
-</ion-view>	
+    <div class="col-sm-4">
+      <div class="form-group">
+          <input type="text" value="" placeholder="Nom" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="form-group">
+          <input type="text" value="" placeholder="Email" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="form-group">
+          <input type="text" value="" placeholder="Password" class="form-control" />
+      </div>
+    </div>
+
+      <button type="button" ng-click="signUp();" class="btn btn-raised btn-primary btn-round btn-block">Register</button>
+
+  </ion-content>
+</ion-view>
