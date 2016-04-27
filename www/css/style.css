@@ -9,3 +9,9 @@
 .scroll-content {
     top: 0 !important;
 }
+.leaflet-top {
+    display: none;
+}
+.leaflet-bottom .leaflet-control {
+    margin-bottom: 50px;
+}

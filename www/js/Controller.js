@@ -40,12 +40,23 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
 
   .controller('mapCtrl',['$scope',function($scope){
     $scope.map = L.map('map').setView([51.505, -0.09], 13);
+
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
         id: 'vasach.plk1gn8n',
         accessToken: 'pk.eyJ1IjoidmFzYWNoIiwiYSI6ImNpbXhxNWZnajAwZWJ3OGx5ZW5oam5jc2UifQ.jxlQK5wu7ByHtTk_WD_KRg'
     }).addTo($scope.map);
+    L.control.zoom({position: 'bottomleft'}).addTo($scope.map);
+
+    $scope.map.locate({setView: true, maxZoom: 16});
+    $scope.map.on('locationfound', onLocationFound);
+    function onLocationFound(e) {
+        console.log(e);
+        // e.heading will contain the user's heading (in degrees) if it's available, and if not it will be NaN. This would allow you to point a marker in the same direction the user is pointed.
+        L.marker(e.latlng).addTo($scope.map);
+    }
+
     /*angular.extend($scope,{
 
       layers: {
