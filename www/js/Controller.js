@@ -8,7 +8,7 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
       };
   })
 
-  .controller("singinController", function($scope, $location,$http, $state) {
+  .controller("singinController", function($scope, $location,$http, $state, $ionicHistory) {
 
     var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
     $scope.signUp = function() {
@@ -23,14 +23,10 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
           //envoi du formulaire pour l'ajout de tache a faire
         $http.post(BaseUrl + "addUser", param)
           .success(function(data) { console.log(data.message);(data.message);
-            //document.forms['signup-form'].reset();
-          /*  $http.get(BaseUrl + "todoBur")
-              .success(function(data) {
-                $scope.todos = data;
-                console.log($scope.todos);
-                //$scope.modal.hide();
-                //$window.location.reload();
-            });*/
+            $location.path("home")
+            $ionicHistory.nextViewOptions({
+             disableBack: true
+           });
         });
      };
     })
@@ -43,7 +39,14 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
   })
 
   .controller('mapCtrl',['$scope',function($scope){
-    angular.extend($scope,{
+    $scope.map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'vasach.plk1gn8n',
+        accessToken: 'pk.eyJ1IjoidmFzYWNoIiwiYSI6ImNpbXhxNWZnajAwZWJ3OGx5ZW5oam5jc2UifQ.jxlQK5wu7ByHtTk_WD_KRg'
+    }).addTo($scope.map);
+    /*angular.extend($scope,{
 
       layers: {
         baselayers: {
@@ -64,7 +67,11 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
         lng: 3.427734375,
         zoom: 8,
         autoDiscover: false
-      },
 
-    })
+      },
+      defaults: {
+            scrollWheelZoom: false
+        },
+
+    })*/
   }])
