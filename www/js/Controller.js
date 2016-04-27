@@ -22,8 +22,8 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
           console.log(param);
           //envoi du formulaire pour l'ajout de tache a faire
         $http.post(BaseUrl + "addUser", param)
-          .success(function(data) { console.log();(data.message);
-            //document.forms['addtodo'].reset();
+          .success(function(data) { console.log(data.message);(data.message);
+            //document.forms['signup-form'].reset();
           /*  $http.get(BaseUrl + "todoBur")
               .success(function(data) {
                 $scope.todos = data;

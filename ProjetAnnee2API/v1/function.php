@@ -10,19 +10,25 @@
 
 	/* ############################################################ VOIXTURE ############################################################################# */
 
-	$app->post('/addUser', function() use ($app)  {
-		$param = json_decode($app->request->getBody());
-		$prenom = $param->firstname;
-		$nom = $param->name;
-		$email =  $param->email;
-		$password = $param->password;
+			$app->post('/addUser', function() use ($app)  {
+				$param = json_decode($app->request->getBody());
+				$firstname = $param->firstname;
+				$name = $param->name;
+				$email = $param->email;
+				$password = $param->password;
 
-		$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
-		$statement = $pdo->prepare("INSERT INTO `projetannee2`.`user` (`prenom`,`nom`,`email`,`password`) VALUES (?,?,?,?)");
-		$statement->execute(array($prenom,$nom,$email,$password));
-		$row["message"] = "Bienvenue .";
-		echoResponse(200, $row);
-	});
+				if (!empty($firstname) && !empty($name) && !empty($email) && !empty($password)) {
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+					$statement = $pdo->prepare("INSERT INTO `user`(`prenom`,`nom`,`email`,`password`) VALUES (?,?,?,?)");
+					$statement->execute(array($firstname,$name,$email,$password));
+					$row["message"] = "Bienvenue";
+					echoResponse(200, $row);
+				}else {
+					$row["message"] = "Le formulaire doit etre complet";
+					echoResponse(404, $row);
+				}
+
+			});
 
 			$app->post('/login',function() use ($app)  {
 				$param = json_decode($app->request->getBody());
