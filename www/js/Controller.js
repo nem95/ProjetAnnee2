@@ -49,7 +49,7 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
     }).addTo($scope.map);
     L.control.zoom({position: 'bottomleft'}).addTo($scope.map);
 
-    $scope.map.locate({setView: true, maxZoom: 16});
+    $scope.map.locate({setView: true, maxZoom: 11});
     $scope.map.on('locationfound', onLocationFound);
     function onLocationFound(e) {
         console.log(e);
