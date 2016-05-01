@@ -58,7 +58,10 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
 
         if(markerLocation != 1){
             markerLocation=1;
-            L.marker(e.latlng).addTo($scope.map);
+            var radius = e.accuracy / 2;
+            L.marker(e.latlng,radius).addTo($scope.map);
+            L.circle(e.latlng, radius).addTo($scope.map);
+            console.log(e.accuracy);
         }
 
 
