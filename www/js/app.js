@@ -45,8 +45,4 @@ angular.module('myApp', ['ionic','HomeController'])
     url: '/profil',
     templateUrl: 'templates/profil.html'
   })
-  $stateProvider.state('map', {
-    url: '/map',
-    templateUrl: 'templates/map.html',
-  })
 })
