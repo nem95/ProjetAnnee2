@@ -18,7 +18,7 @@
 				$password = $param->password;
 
 				if (!empty($firstname) && !empty($name) && !empty($email) && !empty($password)) {
-					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
 					$statement = $pdo->prepare("INSERT INTO `user`(`prenom`,`nom`,`email`,`password`) VALUES (?,?,?,?)");
 					$statement->execute(array($firstname,$name,$email,$password));
 					$row["message"] = "Bienvenue";

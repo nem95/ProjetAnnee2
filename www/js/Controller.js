@@ -10,7 +10,7 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
 
   .controller("singinController", function($scope, $location,$http, $state, $ionicHistory) {
 
-    var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
+    var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
     $scope.signUp = function() {
         //$scope.addtodo = {}
         var param = {

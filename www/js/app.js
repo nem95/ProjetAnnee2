@@ -24,10 +24,10 @@ angular.module('myApp', ['ionic','HomeController'])
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/')
+
 
   $stateProvider.state('home', {
-      url: '/',
+      url: '/home',
       templateUrl: 'templates/home.html'
     })
 
@@ -45,4 +45,5 @@ angular.module('myApp', ['ionic','HomeController'])
     url: '/profil',
     templateUrl: 'templates/profil.html'
   })
+  $urlRouterProvider.otherwise('/signup')
 })
