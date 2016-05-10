@@ -31,14 +31,53 @@ angular.module("HomeController", ['nemLogging',"ui-leaflet"])
      };
     })
 
-  .controller("loginController",function($scope, $location, $state) {
-    })
+  .controller("loginController",function($scope, $location, $state, $http, $ionicHistory) {
+
+    var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+
+    $scope.login = function(){
+      alert('etape1');
+      var param = {
+                  email : document.getElementById('email').value,
+                  password : document.getElementById('password').value
+                  };
+
+
+      $http.post(BaseUrl + "login", param)
+       .success(function(response) { if(response != ""){
+         console.log('super');
+
+           $state.go('home');
+           //$state.transitionTo("home");
+           //console.log($localStorage.currentUser);
+           }else {
+                  alert("Vos Identifiants de connexion sont invalides");
+            }
+
+       });
+
+    };
+
+    $scope.Deco = function() {
+      console.log('ok');
+      $localStorage.$reset();
+      //$state.go("connexion");
+      $state.transitionTo("connexion");
+    };
+
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
+  })
 
   .controller("profilController", function($scope, $location, $state){
 
   })
 
-  .controller('mapCtrl',['$scope',function($scope){
+  .controller('mapCtrl',['$scope',function($scope, $localStorage){
+
+
+
     $scope.map = L.map('map').setView([48.77067246880509, 3.251953125], 7);
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {

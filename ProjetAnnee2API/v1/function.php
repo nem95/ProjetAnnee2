@@ -32,12 +32,12 @@
 
 			$app->post('/login',function() use ($app)  {
 				$param = json_decode($app->request->getBody());
-	  		$nom = $param->nom;
+	  		$email = $param->email;
 				$password = $param->password;
     		if((isset($nom)) && (isset($password)))
       	{
-					$pdo = new pdo("mysql:dbname=voixture;host=localhost","root","");
-			 		$result = $pdo->prepare("SELECT * FROM clients WHERE nom_client = '$nom' AND password_client = '$password'");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+			 		$result = $pdo->prepare("SELECT * FROM user WHERE email = '$email' AND password = '$password'");
 			 		$result->execute();
 			 		$user = array();
 			 		$user = $result->fetchAll(PDO::FETCH_ASSOC);
