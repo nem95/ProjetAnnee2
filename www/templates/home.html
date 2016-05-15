@@ -1,7 +1,28 @@
-<ion-view >
-  <ion-content ng-controller="mapCtrl">
+<ion-view ng-controller="mapCtrl" >
+  <ion-content  data-ng-init="showEvent();">
     <div data-tap-disabled="true">
   	   <div id="map"></div>
+    </div>
+
+    <div class="timeline" on-drag-down="onDragDown()" on-swipe-down="swipeDown()" id="timeline" >
+      <div class="slideUp">
+        <i class="fa fa-angle-up fa-5x " aria-hidden="true" ng-click="swipeUp()"></i>
+      </div>
+
+      <div  ng-repeat="event in events | orderBy: '-date' | limitTo: 35"   >
+        <div class="card cards">
+          <div class="item item-divider">
+            <strong>{{event.title}} </strong>
+            <i class="fa fa-trash" aria-hidden="true" ng-click="deleteEvent(event);" ng-show="$storage.currentUser != &apos;&apos;"></i>
+          </div>
+          <div class="item item-text-wrap">
+            <p><strong>Le </strong> {{event.date | date: 'dd' }} {{event.date | date:  'MMMM' }}  {{ event.date | date: 'yyyy' }} </p>
+            <p><strong>Lieu : </strong></strong>{{event.lieu}}</p>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </ion-content>
 </ion-view>

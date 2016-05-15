@@ -34,16 +34,77 @@
 				$param = json_decode($app->request->getBody());
 	  		$email = $param->email;
 				$password = $param->password;
-    		if((isset($nom)) && (isset($password)))
+    		if((isset($email)) && (isset($password)))
       	{
 					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
 			 		$result = $pdo->prepare("SELECT * FROM user WHERE email = '$email' AND password = '$password'");
-			 		$result->execute();
+					$result->execute();
 			 		$user = array();
 			 		$user = $result->fetchAll(PDO::FETCH_ASSOC);
+
 			 		echoResponse(200, $user);
-			 		}
+			 		}else {
+						$row["message"] = "Le formulaire doit etre complet";
+						echoResponse(404, $row);
+					}
 			});
+
+			//########## EVENT ##########\\
+
+		$app->post('/Event', function() use ($app)  {
+			$param = json_decode($app->request->getBody());
+			$id_orga = $param->id_orga;
+			$titre = $param->titre;
+			$activity = $param->activity;
+			$lieu = $param->lieu;
+			$date = $param->date;
+			$var = 0;
+			if ($var == 0) {
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
+				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
+				$row["message"] = "Le message est bien envoyer.";
+				echoResponse(200, $row);
+			}else {
+				$row["message"] = "Le message ,n'a pas etait' envoyer.";
+				echoResponse(404, $row);
+			}
+		});
+
+		$app->get('/Events', function()  {
+			$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+			$statement = $pdo->prepare("SELECT * FROM event");
+			$statement->execute();
+			$event = array();
+			$event = $statement->fetchAll(PDO::FETCH_ASSOC);
+			if ($event) {
+				$event["message"] = "Ce favori a bien été supprimé";
+				echoResponse(200, $event);
+			}else {
+				$event["message"] = "Ca ne marche pas";
+				echoResponse(200, $event);
+			}
+		});
+
+		$app->post('/deleteEvent',function() use ($app)  {
+			$param = json_decode($app->request->getBody());
+			$id = $param->id;
+			if((isset($id)))
+			{
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$result = $pdo->prepare("DELETE FROM event WHERE id = $id");
+				$result->execute();
+				$row["message"] = "Ce favori a bien été supprimé";
+				echoResponse(200, $row);
+			}
+		});
+
+					//#########################################################//
+					//#########################################################//
+					//#########################################################//
+					//#########################################################//
+					//#########################################################//
+
 
 
 			/*#################### Todolist ###################### */

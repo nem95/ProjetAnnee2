@@ -1,0 +1,42 @@
+<ion-view >
+  <ion-content ng-controller="eventController" class="padding" >
+    <ionic-datepicker idate="currentDate" disablepreviousdates="true"  disablefuturedates="false" callback="datePickerCallback" title="title">
+        <button class=" button-block btn btn-raised btn-primary"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
+    </ionic-datepicker>
+      <form name='addEvent' class="addevent" action="#" method="post">
+        <label class="item-input">
+          <input type="text" name="titre" placeholder="Titre" ng-model="titre" id="titre"><br>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Activité
+          </div>
+          <select id="activity">
+            <option selected>Cyclisme</option>
+            <option>Football</option>
+          </select>
+        </label>
+        <label class="item-input">
+          <i class="icon ion-ios-location"></i>
+          <input type="text" name="lieu" placeholder="Où?" ng-model="lieu" id="lieu">
+        </label>
+
+
+        <input class="button button-block btn btn-raised btn-primary" type="button" name="name" value="Envoyer" ng-click="Event(param); modals.hide(); reloadRoute()">
+
+        <div  ng-repeat="event in events | orderBy: '-date' | limitTo: 35"   >
+          <div class="card cards">
+            <div class="item item-divider">
+              <strong>{{event.title}} </strong>
+              <i class="fa fa-trash" aria-hidden="true" ng-click="deleteEvent(event);" ng-show="$storage.currentUser != &apos;&apos;"></i>
+            </div>
+            <div class="item item-text-wrap">
+              <p><strong>Le </strong> {{event.date | date: 'dd' }} {{event.date | date:  'MMMM' }}  {{ event.date | date: 'yyyy' }} </p>
+              <p><strong>Lieu : </strong></strong>{{event.lieu}}</p>
+            </div>
+          </div>
+        </div>
+
+      </form>
+  </ion-content>
+</ion-view>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <!--<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-      <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+      <meta http-equiv="Content-Security-Policy" >
 
 
     <title></title>
@@ -14,6 +14,7 @@
     <link href="css/profil.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/material-kit.css" rel="stylesheet">
+    <link href="lib/ionic-datepicker/dist/style.css" rel="stylesheet">
     <link rel="stylesheet" href="ressources/leaflet/leaflet.css">
     <link rel="stylesheet" href="ressources/fontawsome/css/font-awesome.min.css">
 
@@ -37,10 +38,15 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/Controller.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
     <script src="ressources/angularJS/angular.min.js"></script>
     <script src="ressources/leaflet/leaflet.js"></script>
     <script src="js/angular-simple-logger.js"></script>
     <script src="js/ui-leaflet.min.js"></script>
+
+    <script src="lib/ionic-datepicker/dist/templates.js"></script>
+    <script src="lib/ionic-datepicker/dist/ionic-datepicker.js"></script>
+    <script src="lib/angular-i18n/angular-locale_fr-fr.js"></script>
   </head>
   <body ng-app="myApp">
 
@@ -51,7 +57,7 @@
 
               <ion-nav-buttons side="left">
        <!-- Toggle left side menu -->
-               <button menu-toggle="left" class="button button-icon icon "> <img src="../ProjetAnnee2API/img/menu-options.png" alt="" class="img-responsive"></button>
+               <button menu-toggle="left" class="button button-icon icon "> <img src="http://localhost:8888/ProjetAnnee2/ProjetAnnee2API/img/menu-options.png" alt="" class="img-responsive"></button>
               </ion-nav-buttons>
             </ion-nav-bar>
 
@@ -68,10 +74,7 @@
           <ion-item menu-close="" ui-sref="profil">
             Profil
           </ion-item>
-          <ion-item menu-close="" ng-show="$storage.currentUser == '' " ui-sref="login">
-            Connexion
-          </ion-item>
-          <ion-item menu-close="" ng-show="$storage.currentUser != '' " ng-click="Deco()">
+          <ion-item menu-close="" ng-show="$storage.currentUser != '' " ng-click="Deco()" ui-sref="login">
             Deconnexion
           </ion-item>
         </ion-list>
