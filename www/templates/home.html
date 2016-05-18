@@ -1,12 +1,17 @@
 <ion-view ng-controller="mapCtrl" >
-  <ion-content  data-ng-init="showEvent();">
+  <ion-content  data-ng-init="showEvent(); map();">
     <div data-tap-disabled="true">
   	   <div id="map"></div>
     </div>
-
     <div class="timeline" on-drag-down="onDragDown()" on-swipe-down="swipeDown()" id="timeline" >
       <div class="slideUp">
         <i class="fa fa-angle-up fa-5x " aria-hidden="true" ng-click="swipeUp()"></i>
+      </div>
+
+      <div id="">
+        <input placeholder='depart' ng-model="depart" id="pointA"></input>
+        <input placeholder='arrivée' ng-model="arrivee" id="pointB"></input>
+        <input id="submit" type="button" value="Geocode" ng-click="setRoute()">
       </div>
 
       <div  ng-repeat="event in events | orderBy: '-date' | limitTo: 35"   >
