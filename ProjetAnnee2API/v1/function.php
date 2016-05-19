@@ -57,9 +57,18 @@
 			$titre = $param->titre;
 			$activity = $param->activity;
 			$lieu = $param->lieu;
+			$depart = $param->depart;
+			$arrivee = $param->arrivee;
 			$date = $param->date;
 			$var = 0;
-			if ($var == 0) {
+
+			if ($lieu == '') {
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `depart`, `arrivee`, `date`) VALUES (?,?,?,?,?,?)");
+				$statement->execute(array($id_orga,$titre,$activity,$depart,$arrivee,$date));
+				$row["message"] = "Le message est bien envoyer.";
+				echoResponse(200, $row);
+			}elseif($depart == '' && $arrivee == '') {
 				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
 				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
 				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
@@ -78,7 +87,7 @@
 			$event = array();
 			$event = $statement->fetchAll(PDO::FETCH_ASSOC);
 			if ($event) {
-				$event["message"] = "Ce favori a bien été supprimé";
+				$event["message"] = "Ce favori a bien été ajouter";
 				echoResponse(200, $event);
 			}else {
 				$event["message"] = "Ca ne marche pas";
@@ -96,6 +105,41 @@
 				$result->execute();
 				$row["message"] = "Ce favori a bien été supprimé";
 				echoResponse(200, $row);
+			}
+		});
+
+
+		$app->post('/adresse', function() use ($app)  {
+			$param = json_decode($app->request->getBody());
+			$id_orga = $param->id_orga;
+			$titre = $param->titre;
+			$activity = $param->activity;
+			$lieu = $param->lieu;
+			$date = $param->date;
+			$var = 0;
+			if ($depart != "" && $arrivee ) {
+
+			    $address = $donnees['ville'];
+			    $coordinates = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=true');
+			    $coordinates = json_decode($coordinates, true);
+
+
+			    if ($coordinates['status'] == "OK") {
+			        $lat = $coordinates['results'][0]['geometry']['location']['lat'];
+			        $lng = $coordinates['results'][0]['geometry']['location']['lng'];
+			    } else {
+			        return array("error", $coordinates['status']);
+			    }
+			}
+			if ($var == 0) {
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
+				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
+				$row["message"] = "Le message est bien envoyer.";
+				echoResponse(200, $row);
+			}else {
+				$row["message"] = "Le message ,n'a pas etait' envoyer.";
+				echoResponse(404, $row);
 			}
 		});
 

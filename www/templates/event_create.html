@@ -4,7 +4,7 @@
   	   <div id="map"></div>
     </div>
 
-    <div class="create" class="padding">
+    <div class="create" class="padding" ng-init="Football = 0">
       <ionic-datepicker idate="currentDate" disablepreviousdates="true"  disablefuturedates="false" callback="datePickerCallback" title="title">
           <button class=" button-block btn btn-raised btn-primary"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
       </ionic-datepicker>
@@ -17,48 +17,48 @@
           <div class="input-label">
             Activité
           </div>
-          <select id="activity">
+          <select  ng-model="activity" id="activity">
             <option selected>Cyclisme</option>
-            <option>Football</option>
+            <option value="football">Football</option>
           </select>
         </label>
-        <div class="col-xs-6">
+        <div class="col-xs-6" ng-hide="activity == 'football'">
           <div class="input-group">
         		<span class="input-group-addon">
               <p>
                 <i class="icon ion-ios-location"></i>
               </p>
         		</span>
-            <input type="text" placeholder='depart' ng-model="depart" class="form-control"id="pointA"></input>
+            <input type="text" placeholder='depart' ng-model="depart" class="form-control" id="depart"></input>
         	</div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-6" ng-hide="activity == 'football'">
           <div class="input-group">
         		<span class="input-group-addon">
               <p>
                 <i class="icon ion-ios-location"></i>
               </p>
             </span>
-            <input type="text" placeholder='arrivée' ng-model="arrivee" class="form-control"id="pointB"></input>
+            <input type="text" placeholder='arrivée' ng-model="arrivee" class="form-control" id="arrivee"></input>
         	</div>
         </div>
 
-        <input id="submit" class="btn btn-lg btn-primary btn-block geocode" type="button" value="Visualiser" ng-click="setRoute()">
+        <div class="col-xs-12" ng-show="activity == 'football'">
+          <div class="input-group">
+        		<span class="input-group-addon">
+              <p>
+                <i class="icon ion-ios-location"></i>
+              </p>
+            </span>
+            <input type="text" placeholder='ou' ng-model="lieu" class="form-control"id="lieu"></input>
+        	</div>
+        </div>
 
-
-        <input class="button button-block btn btn-raised btn-primary" type="button" name="name" value="Envoyer" ng-click="Event(param); modals.hide(); reloadRoute()">
-
-        <div  ng-repeat="event in events | orderBy: '-date' | limitTo: 35"   >
-          <div class="card cards">
-            <div class="item item-divider">
-              <strong>{{event.title}} </strong>
-              <i class="fa fa-trash" aria-hidden="true" ng-click="deleteEvent(event);" ng-show="$storage.currentUser != &apos;&apos;"></i>
-            </div>
-            <div class="item item-text-wrap">
-              <p><strong>Le </strong> {{event.date | date: 'dd' }} {{event.date | date:  'MMMM' }}  {{ event.date | date: 'yyyy' }} </p>
-              <p><strong>Lieu : </strong></strong>{{event.lieu}}</p>
-            </div>
-          </div>
+        <div class="col-xs-6">
+          <input id="submit" class="button button-block btn btn-raised btn-info geocode" type="button" value="Visualiser" ng-click="setRoute()">
+        </div>
+        <div class="col-xs-6">
+          <input class="button button-block btn btn-raised btn-primary" type="button" name="name" value="Envoyer" ng-click="Event(param); modals.hide(); reloadRoute()">
         </div>
     </div>
 

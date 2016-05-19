@@ -341,8 +341,11 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
   })
 
-  .controller("eventController", function($scope, $location, $state, $ionicModal, $http, $localStorage){
+  .controller("eventController", function($scope, $location, $state, $ionicModal, $http, $localStorage, $ionicHistory){
     var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+        $ionicHistory.nextViewOptions({
+           disableBack: true
+         });
 
           $scope.$storage = $localStorage.$default({
             liste:'',
@@ -399,6 +402,8 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
                     titre : document.getElementById("titre").value,
                     activity : document.getElementById("activity").value,
                     lieu : document.getElementById("lieu").value,
+                    depart : document.getElementById("depart").value,
+                    arrivee : document.getElementById("arrivee").value,
                     date : dateTime,
                   }
                   console.log(param);
@@ -407,7 +412,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
                   .success(function(response) {
                     console.log('ookook');
                     console.log(response);(response.message);
-                    document.forms['addEvent'].reset();
+                    $state.transitionTo("home");
 
                     $http.get(BaseUrl + "Events")
                       .success(function(data) {
@@ -495,23 +500,23 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
                $scope.map = map;
 
                $scope.setRoute = function() {
-                 var address = document.getElementById("pointA").value;
-                 var addressB = document.getElementById("pointB").value;
+                 var address = document.getElementById("depart").value;
+                 var addressB = document.getElementById("arrivee").value;
                  geocoder.geocode( { 'address': address}, function(results, status) {
                    if (status == google.maps.GeocoderStatus.OK) {
 
-                     var marker = new google.maps.Marker({
+                     /*var marker = new google.maps.Marker({
                          map: map,
                          position: results[0].geometry.location
-                     });
+                     });*/
 
                      geocoder.geocode( { 'address': addressB}, function(results, status) {
                        if (status == google.maps.GeocoderStatus.OK) {
 
-                         var marker = new google.maps.Marker({
+                         /*var marker = new google.maps.Marker({
                              map: map,
                              position: results[0].geometry.location
-                         });
+                         });*/
                        } else {
                          alert("Geocode was not successful for the following reason: " + status);
                        }
