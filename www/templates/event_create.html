@@ -1,12 +1,18 @@
 <ion-view >
-  <ion-content ng-controller="eventController" class="padding" >
-    <ionic-datepicker idate="currentDate" disablepreviousdates="true"  disablefuturedates="false" callback="datePickerCallback" title="title">
-        <button class=" button-block btn btn-raised btn-primary"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
-    </ionic-datepicker>
-      <form name='addEvent' class="addevent" action="#" method="post">
-        <label class="item-input">
-          <input type="text" name="titre" placeholder="Titre" ng-model="titre" id="titre"><br>
-        </label>
+  <ion-content ng-controller="eventController" data-ng-init="map();" >
+    <div data-tap-disabled="true">
+  	   <div id="map"></div>
+    </div>
+
+    <div class="create" class="padding">
+      <ionic-datepicker idate="currentDate" disablepreviousdates="true"  disablefuturedates="false" callback="datePickerCallback" title="title">
+          <button class=" button-block btn btn-raised btn-primary"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
+      </ionic-datepicker>
+        <div class="col-sm-4">
+          <div class="form-group">
+              <input type="text" placeholder="Titre" class="form-control" ng-model="titre" id="titre"/>
+          </div>
+        </div>
         <label class="item item-input item-select">
           <div class="input-label">
             Activité
@@ -16,10 +22,28 @@
             <option>Football</option>
           </select>
         </label>
-        <label class="item-input">
-          <i class="icon ion-ios-location"></i>
-          <input type="text" name="lieu" placeholder="Où?" ng-model="lieu" id="lieu">
-        </label>
+        <div class="col-xs-6">
+          <div class="input-group">
+        		<span class="input-group-addon">
+              <p>
+                <i class="icon ion-ios-location"></i>
+              </p>
+        		</span>
+            <input type="text" placeholder='depart' ng-model="depart" class="form-control"id="pointA"></input>
+        	</div>
+        </div>
+        <div class="col-xs-6">
+          <div class="input-group">
+        		<span class="input-group-addon">
+              <p>
+                <i class="icon ion-ios-location"></i>
+              </p>
+            </span>
+            <input type="text" placeholder='arrivée' ng-model="arrivee" class="form-control"id="pointB"></input>
+        	</div>
+        </div>
+
+        <input id="submit" class="btn btn-lg btn-primary btn-block geocode" type="button" value="Visualiser" ng-click="setRoute()">
 
 
         <input class="button button-block btn btn-raised btn-primary" type="button" name="name" value="Envoyer" ng-click="Event(param); modals.hide(); reloadRoute()">
@@ -36,7 +60,7 @@
             </div>
           </div>
         </div>
+    </div>
 
-      </form>
   </ion-content>
 </ion-view>

@@ -37,7 +37,7 @@
     		if((isset($email)) && (isset($password)))
       	{
 					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-			 		$result = $pdo->prepare("SELECT * FROM user WHERE email = '$email' AND password = '$password'");
+			 		$result = $pdo->prepare("SELECT * FROM user WHERE email = '$email' AND password = '%$password'");
 					$result->execute();
 			 		$user = array();
 			 		$user = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -99,6 +99,28 @@
 			}
 		});
 
+/*
+
+		$reponse = $pdo->query('SELECT * FROM virtuo_references_contents WHERE idcontent = \''.$id.'\' LIMIT 1');
+		$donnees = $reponse->fetch();
+
+		// INITIALISATION GOOGLE MAP : CONVERT VILLE -> LAT/LNG
+
+		if ($donnees['ville'] != "") {
+
+		    $address = $donnees['ville'];
+		    $coordinates = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=true');
+		    $coordinates = json_decode($coordinates, true);
+
+
+		    if ($coordinates['status'] == "OK") {
+		        $lat = $coordinates['results'][0]['geometry']['location']['lat'];
+		        $lng = $coordinates['results'][0]['geometry']['location']['lng'];
+		    } else {
+		        return array("error", $coordinates['status']);
+		    }
+		}
+*/
 					//#########################################################//
 					//#########################################################//
 					//#########################################################//

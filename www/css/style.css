@@ -32,3 +32,22 @@ text-align: center;;
 .leaflet-bottom .leaflet-control {
     margin-bottom: 50px ;
 }
+.create{
+  position: absolute;
+
+  height: auto;
+   left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 15px;
+}
+.create p {
+  color: white;
+  font-size: 1.2em;
+}
+.form-group {
+  margin-top: 5px !important;
+}
+.geocode{
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}

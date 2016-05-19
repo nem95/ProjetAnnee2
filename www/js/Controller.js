@@ -97,21 +97,37 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
     };
 
     $scope.map = function() {
+
+      if (navigator.geolocation)
+        var watchId = navigator.geolocation.watchPosition(successCallback, null,{
+          enableHighAccuracy:true
+        });
+      else
+        alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+
       var directionsService = new google.maps.DirectionsService();
       directionsDisplay = new google.maps.DirectionsRenderer();
 
       console.log('map init');
       geocoder = new google.maps.Geocoder();
 
-      var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
+      var myLatlng = new google.maps.LatLng(48.882549, 2.167654);
 
       var mapOptions = {
         center: myLatlng,
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
-
+      console.log(myLatlng);
       var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      function successCallback(position){
+        map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+          map: map
+        });
+      }
+
   directionsDisplay.setMap(map);
 
       navigator.geolocation.getCurrentPosition(function(pos) {
@@ -433,6 +449,158 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
                    });
              };
 
+             $scope.map = function() {
+
+               if (navigator.geolocation)
+                 var watchId = navigator.geolocation.watchPosition(successCallback, null,{
+                   enableHighAccuracy:true
+                 });
+               else
+                 alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+
+               var directionsService = new google.maps.DirectionsService();
+               directionsDisplay = new google.maps.DirectionsRenderer();
+
+               console.log('map init');
+               geocoder = new google.maps.Geocoder();
+
+               var myLatlng = new google.maps.LatLng(48.882549, 2.167654);
+
+               var mapOptions = {
+                 center: myLatlng,
+                 zoom: 12,
+                 mapTypeId: google.maps.MapTypeId.ROADMAP
+               };
+               console.log(myLatlng);
+               var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+               function successCallback(position){
+                 map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                 var marker = new google.maps.Marker({
+                   position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                   map: map
+                 });
+               }
+
+             directionsDisplay.setMap(map);
+
+               navigator.geolocation.getCurrentPosition(function(pos) {
+                 map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                 // var myLocation = new google.maps.Marker({
+                 //     position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                 //     map: map,
+                 //     title: "My Location"
+                 // });
+               });
+
+               $scope.map = map;
+
+               $scope.setRoute = function() {
+                 var address = document.getElementById("pointA").value;
+                 var addressB = document.getElementById("pointB").value;
+                 geocoder.geocode( { 'address': address}, function(results, status) {
+                   if (status == google.maps.GeocoderStatus.OK) {
+
+                     var marker = new google.maps.Marker({
+                         map: map,
+                         position: results[0].geometry.location
+                     });
+
+                     geocoder.geocode( { 'address': addressB}, function(results, status) {
+                       if (status == google.maps.GeocoderStatus.OK) {
+
+                         var marker = new google.maps.Marker({
+                             map: map,
+                             position: results[0].geometry.location
+                         });
+                       } else {
+                         alert("Geocode was not successful for the following reason: " + status);
+                       }
+                     });
+                   } else {
+                     alert("Geocode was not successful for the following reason: " + status);
+                   }
+                 });
+
+                   var request = {
+                     origin:address,
+                     destination:addressB,
+                     travelMode: google.maps.TravelMode.DRIVING
+                   };
+                   directionsService.route(request, function(result, status) {
+                     if (status == google.maps.DirectionsStatus.OK) {
+                       directionsDisplay.setDirections(result);
+                     }
+                   });
+
+
+
+               }
+
+               $scope.getDistance = function() {
+                 var deferred = $q.defer();
+
+                 var origin1 = new google.maps.LatLng($scope.depart.geometry.location.lat(), $scope.depart.geometry.location.lng());
+                 var origin2 = $scope.depart.formatted_address;
+                 var destinationA = $scope.arrivee.formatted_address;
+                 var destinationB = new google.maps.LatLng($scope.arrivee.geometry.location.lat(), $scope.arrivee.geometry.location.lng());
+
+                 var service = new google.maps.DistanceMatrixService();
+                 service.getDistanceMatrix(
+                   {
+                     origins: [origin1, origin2],
+                     destinations: [destinationA, destinationB],
+                     travelMode: google.maps.TravelMode.DRIVING,
+                     drivingOptions: {
+                       departureTime: new Date($scope.departTime),
+                       trafficModel: "optimistic"
+                     }
+                   }, callback);
+
+                   function callback(response, status) {
+                     if (status == google.maps.DistanceMatrixStatus.OK) {
+                       var origins = response.originAddresses;
+                       var destinations = response.destinationAddresses;
+
+                       for (var i = 0; i < origins.length; i++) {
+                         var results = response.rows[i].elements;
+                           for (var j = 0; j < results.length; j++) {
+                             var element = results[j];
+                             var routeData = [];
+                             routeData[0] = element.distance.value;
+                             routeData[1] = element.duration.text;
+                             deferred.resolve(routeData);
+                             var from = origins[i];
+                             var to = destinations[j];
+                           }
+                       }
+                     }
+                   }
+
+                   return deferred.promise;
+                 }
+
+                 $scope.getPrice = function() {
+                   var promise = $scope.getDistance();
+                   promise.then(function(routeData) {
+                     $scope.price = Math.floor(routeData[0] / 1000 * 2.5);
+                     // $scope.reservationClient($scope.price);
+                     $scope.isPrice = true;
+                     $scope.$storage.infosResa.prix = $scope.price;
+                     $scope.$storage.infosResa.temps = routeData[1];
+                     console.log($scope.$storage.infosResa);
+                   });
+                 }
+
+                 $scope.getResaDate = function() {
+                   var dd = new Date($scope.departDate).getDate();
+                   var mm = new Date($scope.departDate).getMonth()+1;
+                   var yy = new Date($scope.departDate).getFullYear();
+                   var hh = new Date($scope.departTime).getHours();
+                   var ms = new Date($scope.departTime).getMinutes();
+                   var x = yy + ',' + mm + ',' + dd + ' ' + hh + ':' + ms;
+                   $scope.resaDate = new Date(x);
+                 }
+             }
 
 
 
