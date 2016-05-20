@@ -70,9 +70,12 @@
     <ion-side-menu side="left" ng-controller="mainController">
         <ion-list>
           <ion-item menu-close="" ui-sref="home">
+            {{$storage.currentUser[0].email}}
+          </ion-item>
+          <ion-item menu-close="" ui-sref="home">
             Home
           </ion-item>
-          <ion-item menu-close="" ui-sref="event">
+          <ion-item menu-close="" ui-sref="event" ng-click="reloadRoute();">
             new event
           </ion-item>
           <ion-item menu-close="" ui-sref="profil">

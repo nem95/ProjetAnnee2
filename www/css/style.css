@@ -18,7 +18,35 @@
 
  }
  .slideUp{
-text-align: center;;
+text-align: center;
+}
+ .load{
+  width: 20px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.plus{
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  bottom: 15px;right: 20px;
+  z-index: 999;
+  border-radius: 50%;
+  background: #9c27B0;
+}
+.plus-event{
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 16px;
+}
+.reloadEvent{
+  float: right !important;
+  width: 55px !important;
+  margin-top: 5px !important;
+  z-index: 999;
 }
 .bar.bar-clear .button{
   color: black;
@@ -50,4 +78,7 @@ text-align: center;;
 .geocode{
   padding-top: 5px !important;
   padding-bottom: 5px !important;
+}
+.date-event{
+  float: right;
 }

@@ -1,9 +1,13 @@
-<ion-view >
-  <ion-content ng-controller="eventController" data-ng-init="map();" >
+<ion-view ng-controller="eventController">
+  <ion-nav-buttons side="right" >
+    <button  class="button button-icon reloadEvent" ng-click="reloadRoute();"><img src="../img/reload.png" alt="" /></button>
+  </ion-nav-buttons>
+  <ion-content  data-ng-init="map();" >
     <div data-tap-disabled="true">
   	   <div id="map"></div>
     </div>
 
+    <button type="hidden" name="button" ng-click="reloadRoute();"></button>
     <div class="create" class="padding" ng-init="Football = 0">
       <ionic-datepicker idate="currentDate" disablepreviousdates="true"  disablefuturedates="false" callback="datePickerCallback" title="title">
           <button class=" button-block btn btn-raised btn-primary"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
@@ -54,10 +58,14 @@
         	</div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-xs-6" ng-hide="activity == 'football'">
           <input id="submit" class="button button-block btn btn-raised btn-info geocode" type="button" value="Visualiser" ng-click="setRoute()">
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-6" ng-hide="activity == 'football'">
+          <input class="button button-block btn btn-raised btn-primary" type="button" name="name" value="Envoyer" ng-click="Event(param); modals.hide(); reloadRoute()">
+        </div>
+
+        <div class="col-xs-12" ng-show="activity == 'football'">
           <input class="button button-block btn btn-raised btn-primary" type="button" name="name" value="Envoyer" ng-click="Event(param); modals.hide(); reloadRoute()">
         </div>
     </div>

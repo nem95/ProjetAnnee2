@@ -1,7 +1,12 @@
 angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic-datepicker'])
 
-  .controller('mainController', function($scope, $ionicModal, $timeout, $state, $ionicHistory) {
+  .controller('mainController', function($scope, $ionicModal, $timeout, $state, $ionicHistory, $localStorage) {
 
+    $scope.$storage = $localStorage.$default({
+        liste:'',
+        currentUser:'',
+      });
+      console.log($scope.$storage.currentUser);
 
       $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -85,8 +90,12 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
   })
 
-  .controller('mapCtrl', function($scope, $localStorage, $ionicGesture, $http, $state){
+  .controller('mapCtrl', function($scope, $localStorage, $ionicGesture, $http, $state, $window){
     var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+
+    $scope.reloadRoute = function() {
+      $window.location.reload(true);
+    }
 
     $scope.showEvent = function(){
       $http.get(BaseUrl + "Events")
@@ -341,7 +350,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
   })
 
-  .controller("eventController", function($scope, $location, $state, $ionicModal, $http, $localStorage, $ionicHistory){
+  .controller("eventController", function($scope, $location, $state, $ionicModal, $http, $localStorage, $ionicHistory, $window){
     var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
         $ionicHistory.nextViewOptions({
            disableBack: true
@@ -351,6 +360,10 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
             liste:'',
             currentUser:'',
           });
+
+          $scope.reloadRoute = function() {
+            $window.location.reload(true);
+          }
 
           $scope.currentDate = new Date();
           $scope.title = "Calendrier";

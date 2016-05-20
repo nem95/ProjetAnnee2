@@ -1,27 +1,30 @@
 <ion-view ng-controller="mapCtrl" >
+  <ion-nav-buttons side="right" >
+    <button  class="button button-icon reloadEvent" ng-click="reloadRoute();"><img src="../img/reload.png" alt="" /></button>
+  </ion-nav-buttons>
   <ion-content  data-ng-init="showEvent(); map();">
     <div data-tap-disabled="true">
   	   <div id="map"></div>
     </div>
     <div class="padding timeline" on-drag-down="onDragDown()" on-swipe-down="swipeDown()" id="timeline" >
-      <div class="slideUp">
-        <i class="fa fa-angle-up fa-5x " aria-hidden="true" ng-click="swipeUp()"></i>
+
+      <div class="col-xs-12">
+        <div class="slideUp">
+          <img src="../img/up-arrow.png" alt="" ng-click="swipeUp()"/>
+        </div>
       </div>
 
-      <div id="">
-        <input placeholder='depart' ng-model="depart" id="pointA"></input>
-        <input placeholder='arrivée' ng-model="arrivee" id="pointB"></input>
-        <input id="submit" type="button" value="Geocode" ng-click="setRoute()">
-      </div>
 
-      <div  ng-repeat="event in events | orderBy: '-date' | limitTo: 35"   >
+
+
+
+      <div  ng-repeat="event in events | orderBy: '-date' | limitTo: 35">
         <div class="card cards">
           <div class="item item-divider">
             <strong>{{event.title}} </strong>
-            <i class="fa fa-trash" aria-hidden="true" ng-click="deleteEvent(event);" ng-show="$storage.currentUser != &apos;&apos;"></i>
+            <p class="date-event"><strong>Le </strong> {{event.date | date: 'dd' }} {{event.date | date:  'MMMM' }}  {{ event.date | date: 'yyyy' }} </p>
           </div>
           <div class="item item-text-wrap">
-            <p><strong>Le </strong> {{event.date | date: 'dd' }} {{event.date | date:  'MMMM' }}  {{ event.date | date: 'yyyy' }} </p>
             <p><strong>Lieu : </strong></strong>{{event.lieu}}</p>
           </div>
         </div>
@@ -30,4 +33,9 @@
 
     </div>
   </ion-content>
+    <div class="slideUp plus" >
+      <div class="plus-event">
+        <a ui-sref="event"><img src="../img/plus-symbol.png" alt="" class="img-responsive"/></a>
+      </div>
+    </div>
 </ion-view>
