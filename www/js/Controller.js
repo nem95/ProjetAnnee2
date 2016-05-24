@@ -91,6 +91,9 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
   })
 
   .controller('mapCtrl', function($scope, $localStorage, $ionicGesture, $http, $state, $window){
+
+
+
     var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
 
     $scope.reloadRoute = function() {
@@ -106,7 +109,6 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
     };
 
     $scope.map = function() {
-
       if (navigator.geolocation)
         var watchId = navigator.geolocation.watchPosition(successCallback, null,{
           enableHighAccuracy:true
@@ -133,7 +135,9 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
         map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-          map: map
+          map: map,
+          title: "My Location"
+
         });
       }
 
@@ -141,14 +145,16 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
       navigator.geolocation.getCurrentPosition(function(pos) {
         map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-        // var myLocation = new google.maps.Marker({
-        //     position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-        //     map: map,
-        //     title: "My Location"
-        // });
+         var myLocation = new google.maps.Marker({
+             position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+             map: map,
+             title: "My Location"
+         });
       });
 
       $scope.map = map;
+      google.maps.event.trigger( map, 'resize' );
+
 
       $scope.setRoute = function() {
         var address = document.getElementById("pointA").value;
@@ -188,74 +194,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
             }
           });
 
-
-
       }
-
-      $scope.getDistance = function() {
-        var deferred = $q.defer();
-
-        var origin1 = new google.maps.LatLng($scope.depart.geometry.location.lat(), $scope.depart.geometry.location.lng());
-        var origin2 = $scope.depart.formatted_address;
-        var destinationA = $scope.arrivee.formatted_address;
-        var destinationB = new google.maps.LatLng($scope.arrivee.geometry.location.lat(), $scope.arrivee.geometry.location.lng());
-
-        var service = new google.maps.DistanceMatrixService();
-        service.getDistanceMatrix(
-          {
-            origins: [origin1, origin2],
-            destinations: [destinationA, destinationB],
-            travelMode: google.maps.TravelMode.DRIVING,
-            drivingOptions: {
-              departureTime: new Date($scope.departTime),
-              trafficModel: "optimistic"
-            }
-          }, callback);
-
-          function callback(response, status) {
-            if (status == google.maps.DistanceMatrixStatus.OK) {
-              var origins = response.originAddresses;
-              var destinations = response.destinationAddresses;
-
-              for (var i = 0; i < origins.length; i++) {
-                var results = response.rows[i].elements;
-                  for (var j = 0; j < results.length; j++) {
-                    var element = results[j];
-                    var routeData = [];
-                    routeData[0] = element.distance.value;
-                    routeData[1] = element.duration.text;
-                    deferred.resolve(routeData);
-                    var from = origins[i];
-                    var to = destinations[j];
-                  }
-              }
-            }
-          }
-
-          return deferred.promise;
-        }
-
-        $scope.getPrice = function() {
-          var promise = $scope.getDistance();
-          promise.then(function(routeData) {
-            $scope.price = Math.floor(routeData[0] / 1000 * 2.5);
-            // $scope.reservationClient($scope.price);
-            $scope.isPrice = true;
-            $scope.$storage.infosResa.prix = $scope.price;
-            $scope.$storage.infosResa.temps = routeData[1];
-            console.log($scope.$storage.infosResa);
-          });
-        }
-
-        $scope.getResaDate = function() {
-          var dd = new Date($scope.departDate).getDate();
-          var mm = new Date($scope.departDate).getMonth()+1;
-          var yy = new Date($scope.departDate).getFullYear();
-          var hh = new Date($scope.departTime).getHours();
-          var ms = new Date($scope.departTime).getMinutes();
-          var x = yy + ',' + mm + ',' + dd + ' ' + hh + ':' + ms;
-          $scope.resaDate = new Date(x);
-        }
     }
 
 

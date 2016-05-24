@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <!--<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-      <meta http-equiv="Content-Security-Policy" >
+      <meta http-equiv="Content-Security-Policy">
 
 
     <title></title>
@@ -14,7 +14,7 @@
     <link href="css/profil.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/material-kit.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/l.geosearch.css" />
+    <link rel="stylesheet" href="css/l.geosearch.css">
 
     <link href="lib/ionic-datepicker/dist/style.css" rel="stylesheet">
     <link rel="stylesheet" href="ressources/leaflet/leaflet.css">
@@ -58,7 +58,7 @@
 
               <ion-nav-buttons side="left">
        <!-- Toggle left side menu -->
-               <button menu-toggle="left" class="button button-icon icon "> <img src="http://localhost:8888/ProjetAnnee2/ProjetAnnee2API/img/menu-options.png" alt="" class="img-responsive"></button>
+                <img src="img/menu-options.png" alt="" menu-toggle="left" class="button button-icon icon img-responsive">
               </ion-nav-buttons>
             </ion-nav-bar>
 
@@ -67,12 +67,12 @@
             </ion-nav-view>
 
         </ion-side-menu-content>
-    <ion-side-menu side="left" ng-controller="mainController">
+    <ion-side-menu side="left" ng-controller="mapCtrl">
         <ion-list>
           <ion-item menu-close="" ui-sref="home">
             {{$storage.currentUser[0].email}}
           </ion-item>
-          <ion-item menu-close="" ui-sref="home">
+          <ion-item  menu-close="" ui-sref="home" ng-click="map();" >
             Home
           </ion-item>
           <ion-item menu-close="" ui-sref="event" ng-click="reloadRoute();">
@@ -81,7 +81,7 @@
           <ion-item menu-close="" ui-sref="profil">
             Profil
           </ion-item>
-          <ion-item menu-close="" ng-show="$storage.currentUser != '' " ng-click="Deco()" ui-sref="login">
+          <ion-item menu-close="" ng-show="$storage.currentUser != &apos;&apos; " ng-click="Deco()" ui-sref="login">
             Deconnexion
           </ion-item>
         </ion-list>
