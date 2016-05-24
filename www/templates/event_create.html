@@ -1,14 +1,16 @@
-<ion-view ng-controller="eventController">
-  <ion-nav-buttons side="right" >
-    <button  class="button button-icon reloadEvent" ng-click="reloadRoute();"><img src="img/reload.png" alt="" /></button>
-  </ion-nav-buttons>
-  <ion-content  data-ng-init="map();" >
+<ion-view >
+    <ion-nav-buttons side="right" >
+      <div class="" ng-controller="eventController">
+        <button  class="button button-icon reloadEvent" ng-click="reloadRoute();"><img src="img/reload.png" alt="" /></button>
+      </div>
+    </ion-nav-buttons>
+  <ion-content ng-controller="eventController" data-ng-init="mapEvent();"  >
     <div data-tap-disabled="true">
-  	   <div id="map"></div>
+  	   <div id="mapEvent"></div>
     </div>
 
     <button type="hidden" name="button" ng-click="reloadRoute();"></button>
-    <div class="create" class="padding" ng-init="Football = 0">
+    <div  class="create" class="padding" ng-init="Football = 0">
       <ionic-datepicker idate="currentDate" disablepreviousdates="true"  disablefuturedates="false" callback="datePickerCallback" title="title">
           <button class=" button-block btn btn-raised btn-primary"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
       </ionic-datepicker>

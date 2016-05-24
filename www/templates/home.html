@@ -21,8 +21,10 @@
       <div  ng-repeat="event in events | orderBy: '-date' | limitTo: 35">
         <div class="card cards">
           <div class="item item-divider">
+            <a href="/#/event/{{event.id}}" class="img-info" ng-click="loadEvent({{event.id}});">
             <strong>{{event.title}} </strong>
             <p class="date-event"><strong>Le </strong> {{event.date | date: 'dd' }} {{event.date | date:  'MMMM' }}  {{ event.date | date: 'yyyy' }} </p>
+            </a>
           </div>
           <div class="item item-text-wrap">
             <p><strong>Lieu : </strong></strong>{{event.lieu}}</p>

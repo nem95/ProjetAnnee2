@@ -46,9 +46,14 @@ angular.module('myApp', ['ionic','HomeController'])
     templateUrl: 'templates/profil.html'
   })
 
-  $stateProvider.state('event', {
+  $stateProvider.state('event_create', {
     url: '/create_event',
     templateUrl: 'templates/event_create.html'
+  })
+
+  $stateProvider.state('event', {
+    url: '/event/:id',
+    templateUrl: 'templates/event.html'
   })
 
   $urlRouterProvider.otherwise('/signup')

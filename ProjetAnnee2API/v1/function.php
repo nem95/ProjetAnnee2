@@ -37,7 +37,7 @@
     		if((isset($email)) && (isset($password)))
       	{
 					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-			 		$result = $pdo->prepare("SELECT * FROM user WHERE email = '$email' AND password = '%$password'");
+			 		$result = $pdo->prepare("SELECT * FROM user WHERE email = '$email' AND password = '$password'");
 					$result->execute();
 			 		$user = array();
 			 		$user = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -108,6 +108,20 @@
 			}
 		});
 
+		$app->post('/getEvent',function() use ($app)  {
+			$param = json_decode($app->request->getBody());
+			$id = $param->id;
+			if((isset($id)))
+			{
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$statement = $pdo->prepare("SELECT * FROM event WHERE id = $id");
+				$statement->execute();
+				$event = array();
+				$event = $statement->fetchAll(PDO::FETCH_ASSOC);
+				$row["message"] = "BIEN AFFICHER";
+				echoResponse(200, $event);
+			}
+		});
 
 		$app->post('/adresse', function() use ($app)  {
 			$param = json_decode($app->request->getBody());

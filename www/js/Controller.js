@@ -82,7 +82,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
       console.log('ok');
       $localStorage.$reset();
       //$state.go("connexion");
-      $state.transitionTo("connexion");
+      $state.transitionTo("login");
     };
   })
 
@@ -90,7 +90,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
   })
 
-  .controller('mapCtrl', function($scope, $localStorage, $ionicGesture, $http, $state, $window){
+  .controller('mapCtrl', function($scope, $localStorage, $ionicGesture, $http, $state, $window, $stateParams){
 
 
 
@@ -108,19 +108,35 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
       });
     };
 
+
+    $scope.loadEvent = function(data){
+      var param = {
+                  id : data
+                  }
+        console.log(param);
+
+        $http.post(BaseUrl + "getEvent", param).success(function (data) {
+            $scope.pageEvent = data;
+            console.log($scope.pageEvent);
+
+        });
+    };
+
     $scope.map = function() {
-      if (navigator.geolocation)
+      /*if (navigator.geolocation){
         var watchId = navigator.geolocation.watchPosition(successCallback, null,{
           enableHighAccuracy:true
         });
-      else
+      }
+      else{
         alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+      }
 
       var directionsService = new google.maps.DirectionsService();
       directionsDisplay = new google.maps.DirectionsRenderer();
 
       console.log('map init');
-      geocoder = new google.maps.Geocoder();
+      geocoder = new google.maps.Geocoder();*/
 
       var myLatlng = new google.maps.LatLng(48.882549, 2.167654);
 
@@ -131,17 +147,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
       };
       console.log(myLatlng);
       var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-      function successCallback(position){
-        map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-        var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-          map: map,
-          title: "My Location"
-
-        });
-      }
-
-  directionsDisplay.setMap(map);
+      console.log(map);
 
       navigator.geolocation.getCurrentPosition(function(pos) {
         map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
@@ -152,13 +158,31 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
          });
       });
 
-      $scope.map = map;
+      /*function successCallback(position){
+        map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+          map: map,
+          title: "My Location"
+
+        });
+      }*/
+
+/*  directionsDisplay.setMap(map);
+  console.log("etape 3");*/
+
+
+
+      /*$scope.map = map;
+      console.log('etape 4');
+
       google.maps.event.trigger( map, 'resize' );
+      console.log('etape 5');*/
 
-
+/*
       $scope.setRoute = function() {
-        var address = document.getElementById("pointA").value;
-        var addressB = document.getElementById("pointB").value;
+        var address = document.getElementById("depart").value;
+        var addressB = document.getElementById("arrivee").value;
         geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
 
@@ -194,81 +218,9 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
             }
           });
 
-      }
+      }*/
     }
 
-
-
-
-    /*function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
-        center: {lat: -34.397, lng: 150.644}
-      });
-      var geocoder = new google.maps.Geocoder();
-
-      document.getElementById('submit').addEventListener('click', function() {
-        geocodeAddress(geocoder, map);
-      });
-    }*/
-
-
-    /*
-    $scope.map = L.map('map').setView([48.77067246880509, 3.251953125], 7);
-
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        //attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18,
-        id: 'vasach.plk1gn8n',
-        accessToken: 'pk.eyJ1IjoidmFzYWNoIiwiYSI6ImNpbXhxNWZnajAwZWJ3OGx5ZW5oam5jc2UifQ.jxlQK5wu7ByHtTk_WD_KRg',
-    }).addTo($scope.map);
-
-
-  /*  new L.Control.GeoSearch({
-      provider: new L.GeoSearch.Provider.Google(),
-
-    }).addTo($scope.map);
-
-    $scope.map.locate({setView: true, maxZoom: 16});
-      $scope.map.on('locationfound', onLocationFound);
-      var markerLocation=0;
-    function onLocationFound(e) {
-        //console.log(e);
-        // e.heading will contain the user's heading (in degrees) if it's available, and if not it will be NaN. This would allow you to point a marker in the same direction the user is pointed.
-
-        if(markerLocation != 1){
-            markerLocation=1;
-            var radius = e.accuracy / 2;
-            L.marker(e.latlng,radius).addTo($scope.map);
-            L.circle(e.latlng, radius).addTo($scope.map);
-            console.log(e.accuracy);
-        }
-
-
-        else{
-            console.log('salut');
-            markerLocation=1;
-        }
-    }
-
-
-      ///////////////////////
-      var locationBtn= L.Control.extend({
-          options: ({position: 'bottomleft'}),
-          onAdd:function(map){
-              var container= L.DomUtil.create('div','leaflet-bar leaflet-control leaflet-control-custom');
-              container.style.backgroundColor = 'white';
-              container.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
-              container.style.backgroundSize = "30px 30px";
-              container.style.width = '30px';
-              container.style.height = '30px';
-              container.onclick= function(){
-                  $scope.map.locate({setView: true, maxZoom: 16});
-              }
-              return container;
-          }
-      });
-      $scope.map.addControl(new locationBtn());*/
 
       var $timeline = $('#timeline');
       $scope.swipeDown = function () {
@@ -406,21 +358,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
                    });
              };
 
-             $scope.map = function() {
-
-               if (navigator.geolocation)
-                 var watchId = navigator.geolocation.watchPosition(successCallback, null,{
-                   enableHighAccuracy:true
-                 });
-               else
-                 alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
-
-               var directionsService = new google.maps.DirectionsService();
-               directionsDisplay = new google.maps.DirectionsRenderer();
-
-               console.log('map init');
-               geocoder = new google.maps.Geocoder();
-
+             $scope.mapEvent = function(){
                var myLatlng = new google.maps.LatLng(48.882549, 2.167654);
 
                var mapOptions = {
@@ -429,46 +367,36 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
                  mapTypeId: google.maps.MapTypeId.ROADMAP
                };
                console.log(myLatlng);
-               var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-               function successCallback(position){
-                 map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-                 var marker = new google.maps.Marker({
-                   position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                   map: map
-                 });
-               }
-
-             directionsDisplay.setMap(map);
+               var mapEvent = new google.maps.Map(document.getElementById("mapEvent"), mapOptions);
+               console.log(mapEvent);
 
                navigator.geolocation.getCurrentPosition(function(pos) {
-                 map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-                 // var myLocation = new google.maps.Marker({
-                 //     position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-                 //     map: map,
-                 //     title: "My Location"
-                 // });
+                 mapEvent.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                  var myLocation = new google.maps.Marker({
+                      position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                      map: mapEvent,
+                      title: "My Location"
+                  });
                });
 
-               $scope.map = map;
+
+               var directionsService = new google.maps.DirectionsService();
+               directionsDisplay = new google.maps.DirectionsRenderer();
+               geocoder = new google.maps.Geocoder();
+
+
+
+               directionsDisplay.setMap(mapEvent);
+
+               $scope.map = mapEvent;
 
                $scope.setRoute = function() {
                  var address = document.getElementById("depart").value;
                  var addressB = document.getElementById("arrivee").value;
                  geocoder.geocode( { 'address': address}, function(results, status) {
                    if (status == google.maps.GeocoderStatus.OK) {
-
-                     /*var marker = new google.maps.Marker({
-                         map: map,
-                         position: results[0].geometry.location
-                     });*/
-
                      geocoder.geocode( { 'address': addressB}, function(results, status) {
                        if (status == google.maps.GeocoderStatus.OK) {
-
-                         /*var marker = new google.maps.Marker({
-                             map: map,
-                             position: results[0].geometry.location
-                         });*/
                        } else {
                          alert("Geocode was not successful for the following reason: " + status);
                        }
@@ -488,78 +416,6 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
                        directionsDisplay.setDirections(result);
                      }
                    });
-
-
-
                }
-
-               $scope.getDistance = function() {
-                 var deferred = $q.defer();
-
-                 var origin1 = new google.maps.LatLng($scope.depart.geometry.location.lat(), $scope.depart.geometry.location.lng());
-                 var origin2 = $scope.depart.formatted_address;
-                 var destinationA = $scope.arrivee.formatted_address;
-                 var destinationB = new google.maps.LatLng($scope.arrivee.geometry.location.lat(), $scope.arrivee.geometry.location.lng());
-
-                 var service = new google.maps.DistanceMatrixService();
-                 service.getDistanceMatrix(
-                   {
-                     origins: [origin1, origin2],
-                     destinations: [destinationA, destinationB],
-                     travelMode: google.maps.TravelMode.DRIVING,
-                     drivingOptions: {
-                       departureTime: new Date($scope.departTime),
-                       trafficModel: "optimistic"
-                     }
-                   }, callback);
-
-                   function callback(response, status) {
-                     if (status == google.maps.DistanceMatrixStatus.OK) {
-                       var origins = response.originAddresses;
-                       var destinations = response.destinationAddresses;
-
-                       for (var i = 0; i < origins.length; i++) {
-                         var results = response.rows[i].elements;
-                           for (var j = 0; j < results.length; j++) {
-                             var element = results[j];
-                             var routeData = [];
-                             routeData[0] = element.distance.value;
-                             routeData[1] = element.duration.text;
-                             deferred.resolve(routeData);
-                             var from = origins[i];
-                             var to = destinations[j];
-                           }
-                       }
-                     }
-                   }
-
-                   return deferred.promise;
-                 }
-
-                 $scope.getPrice = function() {
-                   var promise = $scope.getDistance();
-                   promise.then(function(routeData) {
-                     $scope.price = Math.floor(routeData[0] / 1000 * 2.5);
-                     // $scope.reservationClient($scope.price);
-                     $scope.isPrice = true;
-                     $scope.$storage.infosResa.prix = $scope.price;
-                     $scope.$storage.infosResa.temps = routeData[1];
-                     console.log($scope.$storage.infosResa);
-                   });
-                 }
-
-                 $scope.getResaDate = function() {
-                   var dd = new Date($scope.departDate).getDate();
-                   var mm = new Date($scope.departDate).getMonth()+1;
-                   var yy = new Date($scope.departDate).getFullYear();
-                   var hh = new Date($scope.departTime).getHours();
-                   var ms = new Date($scope.departTime).getMinutes();
-                   var x = yy + ',' + mm + ',' + dd + ' ' + hh + ':' + ms;
-                   $scope.resaDate = new Date(x);
-                 }
              }
-
-
-
-
   })
