@@ -1,4 +1,4 @@
-angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic-datepicker'])
+angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker'])
 
   .controller('mainController', function($scope, $ionicModal, $timeout, $state, $ionicHistory, $localStorage) {
 
@@ -15,7 +15,10 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
   .controller("singinController", function($scope, $location,$http, $state, $ionicHistory) {
 
-    var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+      //MAMP
+      //var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+      //WAMP
+      var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
     $ionicHistory.nextViewOptions({
        disableBack: true
      });
@@ -39,12 +42,16 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
   .controller("loginController",function($scope, $location, $state, $http, $ionicHistory, $localStorage) {
 
-    var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+      //MAMP
+      //var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+      //WAMP
+      var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
 
     $scope.$storage = $localStorage.$default({
         liste:'',
         currentUser:'',
       });
+      console.log($scope.$storage.currentUser)
 
     $ionicHistory.nextViewOptions({
        disableBack: true
@@ -77,6 +84,11 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
             }
        });
     };
+      $scope.$storage = $localStorage.$default({
+          liste:'',
+          currentUser:'',
+      });
+      console.log($scope.$storage.currentUser)
 
     $scope.Deco = function() {
       console.log('ok');
@@ -86,7 +98,37 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
     };
   })
 
-  .controller("profilController", function($scope, $location, $state){
+  .controller("profilController", function($scope, $location,$http, $state, $ionicHistory, $localStorage){
+      //MAMP
+      //var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+      //WAMP
+      var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
+      $scope.$storage = $localStorage.$default({
+          liste:'',
+          currentUser:'',
+      });
+      console.log($scope.$storage.currentUser)
+
+      $scope.Deco = function() {
+          console.log('ok');
+          $localStorage.$reset();
+          //$state.go("connexion");
+          $state.transitionTo("login");
+      };
+
+      $scope.loadProfilCu = function(data){
+          var param = {
+              id : $scope.$storage.currentUser[0].id
+          }
+          console.log(param);
+
+          $http.post(BaseUrl + "getProfilCu", param).success(function (data) {
+              $scope.pageProfil = data;
+              console.log($scope.pageProfil);
+          });
+      };
+
+
 
   })
 
@@ -94,7 +136,10 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
 
 
-    var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+      //MAMP
+      //var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+      //WAMP
+      var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
 
     $scope.reloadRoute = function() {
       $window.location.reload(true);
@@ -245,7 +290,10 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
   })
 
   .controller("eventController", function($scope, $location, $state, $ionicModal, $http, $localStorage, $ionicHistory, $window){
-    var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+      //MAMP
+      //var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+      //WAMP
+      var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
         $ionicHistory.nextViewOptions({
            disableBack: true
          });

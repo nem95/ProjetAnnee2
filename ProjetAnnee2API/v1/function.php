@@ -29,6 +29,20 @@
 				}
 
 			});
+			$app->post('/getProfilCu',function() use ($app)  {
+				$param = json_decode($app->request->getBody());
+				$id = $param->id;
+				if((isset($id)))
+				{
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+					$statement = $pdo->prepare("SELECT * FROM user WHERE id = $id");
+					$statement->execute();
+					$profil = array();
+					$profil = $statement->fetchAll(PDO::FETCH_ASSOC);
+					$row["message"] = "BIEN AFFICHER";
+					echoResponse(200, $profil);
+				}
+			});
 
 			$app->post('/login',function() use ($app)  {
 				$param = json_decode($app->request->getBody());
@@ -59,23 +73,19 @@
 			$lieu = $param->lieu;
 			$depart = $param->depart;
 			$arrivee = $param->arrivee;
-			$description = $param->description;
 			$date = $param->date;
-			$place = 12;
-			$time=date_create();
-			$today = date_format($time,"Y/m/d H:i:s");//date_timestamp_get($date);
 			$var = 0;
 
 			if ($lieu == '') {
 				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `depart`, `arrivee`,`description`, `date`, `nb_participant`, `add_at`) VALUES (?,?,?,?,?,?,?,?,?)");
-				$statement->execute(array($id_orga,$titre,$activity,$depart,$arrivee,$description,$date,$place,$today));
+				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `depart`, `arrivee`, `date`) VALUES (?,?,?,?,?,?)");
+				$statement->execute(array($id_orga,$titre,$activity,$depart,$arrivee,$date));
 				$row["message"] = "Le message est bien envoyer.";
 				echoResponse(200, $row);
 			}elseif($depart == '' && $arrivee == '') {
 				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `description`, `date`, `nb_participant`, `add_at`) VALUES (?,?,?,?,?,?,?,?)");
-				$statement->execute(array($id_orga,$titre,$activity,$lieu,$description,$date,$place,$today));
+				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
+				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
 				$row["message"] = "Le message est bien envoyer.";
 				echoResponse(200, $row);
 			}else {
@@ -86,7 +96,7 @@
 
 		$app->get('/Events', function()  {
 			$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-			$statement = $pdo->prepare("SELECT * FROM event ORDER BY add_at DESC ");
+			$statement = $pdo->prepare("SELECT * FROM event");
 			$statement->execute();
 			$event = array();
 			$event = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -115,13 +125,14 @@
 		$app->post('/getEvent',function() use ($app)  {
 			$param = json_decode($app->request->getBody());
 			$id = $param->id;
-			if(!empty($id))
+			if((isset($id)))
 			{
 				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
 				$statement = $pdo->prepare("SELECT * FROM event WHERE id = $id");
 				$statement->execute();
 				$event = array();
 				$event = $statement->fetchAll(PDO::FETCH_ASSOC);
+				$row["message"] = "BIEN AFFICHER";
 				echoResponse(200, $event);
 			}
 		});

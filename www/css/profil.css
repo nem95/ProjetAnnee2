@@ -18,15 +18,15 @@
 	margin-left: auto;
 	margin-top: -113px;
 	border-radius: 50%;
-	/*border:1px  solid red;*/
+	/*border:1px  solid fff;*/
 	background: black;
 	position: relative;
 }
 .avatar{
-	height: 90px;
-	width: 90px;
+	height: 80px;
+	width: 80px;
 	border-radius: 50%;
-	border:3px  solid #22313F;
+	border:1px  solid white;
 	padding: relative;
 	z-index: 99;
 	opacity: 1;
