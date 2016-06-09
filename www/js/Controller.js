@@ -110,14 +110,17 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
 
     $scope.loadEvent = function(data){
-      var param = {
-                  id : data
+      console.log($stateParams.id);
+
+        var param = {
+                  id : $stateParams.id
                   }
         console.log(param);
 
         $http.post(BaseUrl + "getEvent", param).success(function (data) {
             $scope.pageEvent = data;
-            console.log($scope.pageEvent);
+            console.log($scope.pageEvent[0].title);
+            
 
         });
     };
@@ -299,7 +302,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
         $scope.Event = function() {
           console.log(dateTime);
-          console.log($scope.$storage.currentUser[0].id);
+          //console.log($scope.$storage.currentUser[0].id);
 
                 var param = {
                     id_orga : $scope.$storage.currentUser[0].id,

@@ -2,8 +2,24 @@
     <ion-content ng-controller="mapCtrl" ng-init="loadEvent();">
 
         <div  class="padding">
-            <h2>{{pageEvent.title}}</h2>
+          holla
+          <h2 class="event-title">{{pageEvent[0].title}}</h2>
+          <p>
+            {{pageEvent[0].activity}}
+          </p>
+          <button class="btn btn-raised btn-primary">Participer</button>
 
+          <p>
+            {{pageEvent[0].lieu}}
+          </p>
+          <p>
+            {{pageEvent[0].date | date: 'd'}}
+            {{pageEvent[0].date | date: 'MMMM'}}
+            {{pageEvent[0].date | date: 'yyyy'}}
+          </p>
+          <p class="center">
+            <span><b >Participants</b></span>
+          </p>
         </div>
 
     </ion-content>

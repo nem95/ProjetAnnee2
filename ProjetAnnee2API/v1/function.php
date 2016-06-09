@@ -82,7 +82,7 @@
 
 		$app->get('/Events', function()  {
 			$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-			$statement = $pdo->prepare("SELECT * FROM event");
+			$statement = $pdo->prepare("SELECT * FROM event ORDER BY date DESC ");
 			$statement->execute();
 			$event = array();
 			$event = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -111,14 +111,13 @@
 		$app->post('/getEvent',function() use ($app)  {
 			$param = json_decode($app->request->getBody());
 			$id = $param->id;
-			if((isset($id)))
+			if(!empty($id))
 			{
 				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
 				$statement = $pdo->prepare("SELECT * FROM event WHERE id = $id");
 				$statement->execute();
 				$event = array();
 				$event = $statement->fetchAll(PDO::FETCH_ASSOC);
-				$row["message"] = "BIEN AFFICHER";
 				echoResponse(200, $event);
 			}
 		});
