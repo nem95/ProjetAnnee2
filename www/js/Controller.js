@@ -120,7 +120,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
         $http.post(BaseUrl + "getEvent", param).success(function (data) {
             $scope.pageEvent = data;
             console.log($scope.pageEvent[0].title);
-            
+
 
         });
     };
@@ -311,8 +311,10 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
                     lieu : document.getElementById("lieu").value,
                     depart : document.getElementById("depart").value,
                     arrivee : document.getElementById("arrivee").value,
+                    description : document.getElementById("description").value,
                     date : dateTime,
                   }
+
                   console.log(param);
                   //envoi du formulaire pour l'ajout de tache a faire
                 $http.post(BaseUrl + "Event", param)

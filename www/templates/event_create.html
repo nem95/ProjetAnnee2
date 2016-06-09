@@ -23,13 +23,13 @@
           <div class="input-label">
             Activité
           </div>
-          <select  ng-model="activity" id="activity">
+          <select  ng-model="activity" id="activity" required>
             <option selected>Cyclisme</option>
             <option value="football">Football</option>
           </select>
         </label>
         <div class="col-xs-6" ng-hide="activity == 'football'">
-          <div class="input-group">
+          <div class="input-group form-group">
         		<span class="input-group-addon">
               <p>
                 <i class="icon ion-ios-location"></i>
@@ -39,7 +39,7 @@
         	</div>
         </div>
         <div class="col-xs-6" ng-hide="activity == 'football'">
-          <div class="input-group">
+          <div class="input-group form-group">
         		<span class="input-group-addon">
               <p>
                 <i class="icon ion-ios-location"></i>
@@ -50,15 +50,22 @@
         </div>
 
         <div class="col-xs-12" ng-show="activity == 'football'">
-          <div class="input-group">
-        		<span class="input-group-addon">
+          <div class="input-group form-group">
+        		<span class="input-group-addon ">
               <p>
                 <i class="icon ion-ios-location"></i>
               </p>
             </span>
-            <input type="text" placeholder='ou' ng-model="lieu" class="form-control"id="lieu"></input>
+            <input type="text" placeholder='ou' ng-model="lieu" class="form-control" id="lieu"></input>
         	</div>
         </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <textarea id="description" class="form-control" placeholder="Description" rows="5"></textarea>
+          </div>
+        </div>
+
 
         <div class="col-xs-6" ng-hide="activity == 'football'">
           <input id="submit" class="button button-block btn btn-raised btn-info geocode" type="button" value="Visualiser" ng-click="setRoute()">

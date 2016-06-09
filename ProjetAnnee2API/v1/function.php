@@ -59,19 +59,20 @@
 			$lieu = $param->lieu;
 			$depart = $param->depart;
 			$arrivee = $param->arrivee;
+			$description = $param->description;
 			$date = $param->date;
 			$var = 0;
 
 			if ($lieu == '') {
 				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `depart`, `arrivee`, `date`) VALUES (?,?,?,?,?,?)");
-				$statement->execute(array($id_orga,$titre,$activity,$depart,$arrivee,$date));
+				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `depart`, `arrivee`,`description`, `date`) VALUES (?,?,?,?,?,?,?)");
+				$statement->execute(array($id_orga,$titre,$activity,$depart,$arrivee,$description,$date));
 				$row["message"] = "Le message est bien envoyer.";
 				echoResponse(200, $row);
 			}elseif($depart == '' && $arrivee == '') {
 				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
-				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
+				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `description`, `date`) VALUES (?,?,?,?,?,?)");
+				$statement->execute(array($id_orga,$titre,$activity,$lieu,$description,$date));
 				$row["message"] = "Le message est bien envoyer.";
 				echoResponse(200, $row);
 			}else {
