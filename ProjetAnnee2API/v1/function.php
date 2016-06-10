@@ -18,7 +18,7 @@
 				$password = $param->password;
 
 				if (!empty($firstname) && !empty($name) && !empty($email) && !empty($password)) {
-					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 					$statement = $pdo->prepare("INSERT INTO `user`(`prenom`,`nom`,`email`,`password`) VALUES (?,?,?,?)");
 					$statement->execute(array($firstname,$name,$email,$password));
 					$row["message"] = "Bienvenue";
@@ -43,6 +43,20 @@
 					echoResponse(200, $profil);
 				}
 			});
+			$app->post('/getUser',function() use ($app)  {
+				$param = json_decode($app->request->getBody());
+				$id = $param->id;
+				if((isset($id)))
+				{
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+					$statement = $pdo->prepare("SELECT * FROM user WHERE id = $id");
+					$statement->execute();
+					$profil = array();
+					$profil = $statement->fetchAll(PDO::FETCH_ASSOC);
+					$row["message"] = "BIEN AFFICHER";
+					echoResponse(200, $profil);
+				}
+			});
 
 			$app->post('/login',function() use ($app)  {
 				$param = json_decode($app->request->getBody());
@@ -50,7 +64,7 @@
 				$password = $param->password;
     		if((isset($email)) && (isset($password)))
       	{
-					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 			 		$result = $pdo->prepare("SELECT * FROM user WHERE email = '$email' AND password = '$password'");
 					$result->execute();
 			 		$user = array();
@@ -77,13 +91,13 @@
 			$var = 0;
 
 			if ($lieu == '') {
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `depart`, `arrivee`, `date`) VALUES (?,?,?,?,?,?)");
 				$statement->execute(array($id_orga,$titre,$activity,$depart,$arrivee,$date));
 				$row["message"] = "Le message est bien envoyer.";
 				echoResponse(200, $row);
 			}elseif($depart == '' && $arrivee == '') {
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
 				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
 				$row["message"] = "Le message est bien envoyer.";
@@ -95,7 +109,7 @@
 		});
 
 		$app->get('/Events', function()  {
-			$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+			$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 			$statement = $pdo->prepare("SELECT * FROM event");
 			$statement->execute();
 			$event = array();
@@ -109,12 +123,13 @@
 			}
 		});
 
+
 		$app->post('/deleteEvent',function() use ($app)  {
 			$param = json_decode($app->request->getBody());
 			$id = $param->id;
 			if((isset($id)))
 			{
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$result = $pdo->prepare("DELETE FROM event WHERE id = $id");
 				$result->execute();
 				$row["message"] = "Ce favori a bien été supprimé";
@@ -127,7 +142,7 @@
 			$id = $param->id;
 			if((isset($id)))
 			{
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$statement = $pdo->prepare("SELECT * FROM event WHERE id = $id");
 				$statement->execute();
 				$event = array();
@@ -160,7 +175,7 @@
 			    }
 			}
 			if ($var == 0) {
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
 				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
 				$row["message"] = "Le message est bien envoyer.";

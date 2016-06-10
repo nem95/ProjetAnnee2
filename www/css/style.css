@@ -89,3 +89,15 @@ text-align: center;
 .side-profil-content img{
     margin-left: 2.5em;
 }
+.nopadding{
+    padding: 0 !important;
+}
+.vcenter{
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0) scale(1.0, 1.0);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}

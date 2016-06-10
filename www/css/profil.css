@@ -23,12 +23,31 @@
 	position: relative;
 }
 .avatar{
-	height: 80px;
-	width: 80px;
+	height: 100px;
+	width: 100px;
 	border-radius: 50%;
-	border:1px  solid white;
+	border:2px  solid rgba(255, 255, 255, 0.4);
 	padding: relative;
 	z-index: 99;
 	opacity: 1;
 }
+.profiltitle{
+	text-transform: uppercase;
+	font-size: 1.5em;
+	color: white;
+	margin-top: 20px;
+}
+.back-profil{
+	height:40vh;
+	max-height: 40vh;
+	background-size: cover;
+}
+.img-couv{
+	max-height: inherit;
+	width: 100%;
+	filter: brightness(50%);
+	-webkit-filter: brightness(50%);
+	-moz-filter: brightness(50%);
+	-o-filter: brightness(50%);
 
+}

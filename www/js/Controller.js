@@ -98,7 +98,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
     };
   })
 
-  .controller("profilController", function($scope, $location,$http, $state, $ionicHistory, $localStorage){
+  .controller("profilController", function($scope, $location,$http, $state, $ionicHistory, $localStorage,$stateParams){
       //MAMP
       //var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
       //WAMP
@@ -107,7 +107,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
           liste:'',
           currentUser:'',
       });
-      console.log($scope.$storage.currentUser)
+      //console.log($scope.$storage.currentUser)
 
       $scope.Deco = function() {
           console.log('ok');
@@ -120,17 +120,52 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
           var param = {
               id : $scope.$storage.currentUser[0].id
           }
-          console.log(param);
+          //console.log(param);
 
           $http.post(BaseUrl + "getProfilCu", param).success(function (data) {
               $scope.pageProfil = data;
-              console.log($scope.pageProfil);
+              //console.log($scope.pageProfil);
+          });
+      };
+      $scope.loadProfil = function(data){
+          console.log($stateParams.id);
+
+          var param = {
+              id : $stateParams.id
+          }
+          console.log(param);
+
+          $http.post(BaseUrl + "getUser", param).success(function (data) {
+              $scope.User = data;
+              console.log($scope.User);
           });
       };
 
 
 
   })
+
+
+
+    /*****TAB****/
+    .controller('TabController', function(){
+        this.tab = 1;
+
+        this.setTab = function(newValue){
+            this.tab = newValue;
+        };
+
+        this.isSet = function(tabName){
+            return this.tab === tabName;
+        };
+    })
+
+
+
+
+
+
+    /****MAP***/
 
   .controller('mapCtrl', function($scope, $localStorage, $ionicGesture, $http, $state, $window, $stateParams){
 

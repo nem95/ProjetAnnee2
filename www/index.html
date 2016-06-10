@@ -71,10 +71,9 @@
     <ion-side-menu side="left" ng-controller="profilController">
         <ion-list>
           <ion-item  menu-close="">
-            <div class="side-profil-content">
+            <div class="col-md-12  text-center">
               <a href="/#/profil/{{user.id}}" ng-click="loadProfilCu({{user.id}});">
-              <img src="../img/avatar.jpg" alt="avatar" class="avatar">
-              <p>{{$storage.currentUser[0].pseudo}}</p>
+              <img src="../img/default-user.png" alt="avatar" class=" center-block avatar">
               <p>{{$storage.currentUser[0].email}}</p>
               </a>
             </div>
