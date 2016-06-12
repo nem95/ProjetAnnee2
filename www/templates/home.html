@@ -19,11 +19,12 @@
           <div class="item item-divider">
             <a href="/#/event/{{event.id}}" class="img-info" ng-click="loadEvent({{event.id}});">
             <strong>{{event.title}} </strong>
-            <p class="date-event"><strong>Le </strong> {{event.date | date: 'dd' }} {{event.date | date:  'MMMM' }}  {{ event.date | date: 'yyyy' }} </p>
+            <p class="date-event"><i class="fa fa-calendar" aria-hidden="true"></i> {{event.date | date: 'dd' }} {{event.date | date:  'MMMM' }}  {{ event.date | date: 'yyyy' }} </p>
             </a>
           </div>
           <div class="item item-text-wrap">
-            <p><strong>Lieu : </strong></strong>{{event.lieu}}</p>
+            <p><strong>Sport : </strong>{{event.activity}}</p>
+            <p><strong><i class="fa fa-map-marker" aria-hidden="true"></i> </strong>{{event.lieu}}{{event.depart}} - {{event.arrivee}}</p>
           </div>
         </div>
       </div>
@@ -31,7 +32,7 @@
   </ion-content>
     <div class="slideUp plus" >
       <div class="plus-event">
-        <a ui-sref="event"><img src="img/plus-symbol.png" alt="" class="img-responsive"/></a>
+        <a ui-sref="event_create"><img src="img/plus-symbol.png" alt="" class="img-responsive"/></a>
       </div>
     </div>
 </ion-view>

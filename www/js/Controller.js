@@ -1,4 +1,4 @@
-angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic-datepicker'])
+angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic-datepicker','ngMessages'])
 
   .controller('mainController', function($scope, $ionicModal, $timeout, $state, $ionicHistory, $localStorage) {
 
@@ -244,7 +244,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
 
   })
 
-  .controller("eventController", function($scope, $location, $state, $ionicModal, $http, $localStorage, $ionicHistory, $window){
+  .controller("eventController", function($scope, $location, $state, $ionicModal, $http, $localStorage, $ionicHistory, $window, $ionicPopup){
     var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
         $ionicHistory.nextViewOptions({
            disableBack: true
@@ -303,24 +303,48 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
         $scope.Event = function() {
           console.log(dateTime);
           //console.log($scope.$storage.currentUser[0].id);
+          var param = {
+              id_orga : $scope.$storage.currentUser[0].id,
+              titre : document.getElementById("titre").value,
+              activity : document.getElementById("activity").value,
+              lieu : document.getElementById("lieu").value,
+              depart : document.getElementById("depart").value,
+              arrivee : document.getElementById("arrivee").value,
+              description : document.getElementById("description").value,
+              date : dateTime,
+            }
+            console.log(param);
 
-                var param = {
-                    id_orga : $scope.$storage.currentUser[0].id,
-                    titre : document.getElementById("titre").value,
-                    activity : document.getElementById("activity").value,
-                    lieu : document.getElementById("lieu").value,
-                    depart : document.getElementById("depart").value,
-                    arrivee : document.getElementById("arrivee").value,
-                    description : document.getElementById("description").value,
-                    date : dateTime,
-                  }
+            if (param.activity == "football") {
+              if (param.titre == '' || param.activity == '' || param.lieu == '' || param.description == '' || param.date == '' ) {
+                // Custom popup
+                var myPopup = $ionicPopup.show({
+                   template: 'Tout les champs doivent être completer',
+                   title: '<b>ALERTE</b>',
+                   scope: $scope,
 
-                  console.log(param);
-                  //envoi du formulaire pour l'ajout de tache a faire
+                   buttons: [
+                      { text: 'RETOUR',
+                        type: 'btn btn-raised btn-danger'
+                      }
+                   ]
+                });
+
+                myPopup.then(function(res) {
+                   console.log('Tapped!', res);
+                });
+              }else {
+                //envoi du formulaire pour l'ajout de tache a faire
                 $http.post(BaseUrl + "Event", param)
                   .success(function(response) {
                     console.log('ookook');
                     console.log(response);(response.message);
+                    //vide les champs de texte
+                    $scope.titre = '';
+                    $scope.activity = '';
+                    $scope.depart = '';
+                    $scope.arrivee = '';
+                    $scope.description = '';
                     $state.transitionTo("home");
 
                     $http.get(BaseUrl + "Events")
@@ -329,98 +353,138 @@ angular.module("HomeController", ['ngStorage', 'nemLogging',"ui-leaflet", 'ionic
                         console.log($scope.events);
                     });
                 });
-             };
+              }
+            }else if (param.activity == "Cyclisme" || param.activity == '') {
+              if (param.titre == '' || param.activity == '' || param.depart == '' || param.arrivee == '' || param.description == '' || param.date == '' ) {
+                // Custom popup
+                var myPopup = $ionicPopup.show({
+                   template: 'Tout les champs doivent être completer',
+                   title: '<b>ALERTE</b>',
+                   scope: $scope,
 
-             $scope.showEvent = function(){
-               $scope.listCanSwipe = true
-               $http.get(BaseUrl + "Events")
-                 .success(function(data) {
-                   $scope.events = data;
-                   console.log($scope.events);
-               });
-             }
+                   buttons: [
+                      { text: 'RETOUR',
+                        type: 'btn btn-raised btn-danger'
+                      }
+                   ]
+                });
 
-             $scope.editEvent = function(){
-               $scope.listCanSwipe = true
-               $http.delete(BaseUrl + "Events")
-                 .success(function(data) {
-                   $scope.events = data;
-                   console.log($scope.events);
-               });
-             }
+                myPopup.then(function(res) {
+                   console.log('Tapped!', res);
+                });
+              }else {
+                //envoi du formulaire pour l'ajout de tache a faire
+                $http.post(BaseUrl + "Event", param)
+                  .success(function(response) {
+                    console.log('ookook');
+                    console.log(response);(response.message);
+                    //vide les champs de texte
+                    $scope.titre = '';
+                    $scope.activity = '';
+                    $scope.lieu = '';
+                    $scope.description = '';
+                    $state.transitionTo("home");
 
-             $scope.deleteEvent = function(event){
-                var param = {
-                              id : event.id ,
-                            };
-                $http.post(BaseUrl + "deleteEvent", param)
+                    $http.get(BaseUrl + "Events")
+                      .success(function(data) {
+                        $scope.events = data;
+                        console.log($scope.events);
+                    });
+                });
+              }
+            }
+       };
+
+       $scope.showEvent = function(){
+         $scope.listCanSwipe = true
+         $http.get(BaseUrl + "Events")
+           .success(function(data) {
+             $scope.events = data;
+             console.log($scope.events);
+         });
+       }
+
+       $scope.editEvent = function(){
+         $scope.listCanSwipe = true
+         $http.delete(BaseUrl + "Events")
+           .success(function(data) {
+             $scope.events = data;
+             console.log($scope.events);
+         });
+       }
+
+       $scope.deleteEvent = function(event){
+          var param = {
+                        id : event.id ,
+                      };
+          $http.post(BaseUrl + "deleteEvent", param)
+             .success(function(data) {
+                 $http.get(BaseUrl + "Events")
                    .success(function(data) {
-                       $http.get(BaseUrl + "Events")
-                         .success(function(data) {
-                           $scope.events = data;
-                           console.log($scope.events);
-                       });
-                   });
-             };
-
-             $scope.mapEvent = function(){
-               var myLatlng = new google.maps.LatLng(48.882549, 2.167654);
-
-               var mapOptions = {
-                 center: myLatlng,
-                 zoom: 12,
-                 mapTypeId: google.maps.MapTypeId.ROADMAP
-               };
-               console.log(myLatlng);
-               var mapEvent = new google.maps.Map(document.getElementById("mapEvent"), mapOptions);
-               console.log(mapEvent);
-
-               navigator.geolocation.getCurrentPosition(function(pos) {
-                 mapEvent.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-                  var myLocation = new google.maps.Marker({
-                      position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-                      map: mapEvent,
-                      title: "My Location"
-                  });
-               });
-
-
-               var directionsService = new google.maps.DirectionsService();
-               directionsDisplay = new google.maps.DirectionsRenderer();
-               geocoder = new google.maps.Geocoder();
-
-
-
-               directionsDisplay.setMap(mapEvent);
-
-               $scope.map = mapEvent;
-
-               $scope.setRoute = function() {
-                 var address = document.getElementById("depart").value;
-                 var addressB = document.getElementById("arrivee").value;
-                 geocoder.geocode( { 'address': address}, function(results, status) {
-                   if (status == google.maps.GeocoderStatus.OK) {
-                     geocoder.geocode( { 'address': addressB}, function(results, status) {
-                       if (status == google.maps.GeocoderStatus.OK) {
-                       } else {
-                         alert("Geocode was not successful for the following reason: " + status);
-                       }
-                     });
-                   } else {
-                     alert("Geocode was not successful for the following reason: " + status);
-                   }
+                     $scope.events = data;
+                     console.log($scope.events);
                  });
+             });
+       };
 
-                   var request = {
-                     origin:address,
-                     destination:addressB,
-                     travelMode: google.maps.TravelMode.DRIVING
-                   };
-                   directionsService.route(request, function(result, status) {
-                     if (status == google.maps.DirectionsStatus.OK) {
-                       directionsDisplay.setDirections(result);
-                     }
-                   });
-               }
+       $scope.mapEvent = function(){
+         var myLatlng = new google.maps.LatLng(48.882549, 2.167654);
+
+         var mapOptions = {
+           center: myLatlng,
+           zoom: 12,
+           mapTypeId: google.maps.MapTypeId.ROADMAP
+         };
+         console.log(myLatlng);
+         var mapEvent = new google.maps.Map(document.getElementById("mapEvent"), mapOptions);
+         console.log(mapEvent);
+
+         navigator.geolocation.getCurrentPosition(function(pos) {
+           mapEvent.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            var myLocation = new google.maps.Marker({
+                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                map: mapEvent,
+                title: "My Location"
+            });
+         });
+
+
+         var directionsService = new google.maps.DirectionsService();
+         directionsDisplay = new google.maps.DirectionsRenderer();
+         geocoder = new google.maps.Geocoder();
+
+
+
+         directionsDisplay.setMap(mapEvent);
+
+         $scope.map = mapEvent;
+
+         $scope.setRoute = function() {
+           var address = document.getElementById("depart").value;
+           var addressB = document.getElementById("arrivee").value;
+           geocoder.geocode( { 'address': address}, function(results, status) {
+             if (status == google.maps.GeocoderStatus.OK) {
+               geocoder.geocode( { 'address': addressB}, function(results, status) {
+                 if (status == google.maps.GeocoderStatus.OK) {
+                 } else {
+                   alert("Geocode was not successful for the following reason: " + status);
+                 }
+               });
+             } else {
+               alert("Geocode was not successful for the following reason: " + status);
              }
+           });
+
+             var request = {
+               origin:address,
+               destination:addressB,
+               travelMode: google.maps.TravelMode.DRIVING
+             };
+             directionsService.route(request, function(result, status) {
+               if (status == google.maps.DirectionsStatus.OK) {
+                 directionsDisplay.setDirections(result);
+               }
+             });
+         }
+       }
   })
