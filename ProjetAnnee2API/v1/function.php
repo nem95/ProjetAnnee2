@@ -58,6 +58,26 @@
 				}
 			});
 
+			$app->post('/updateUser', function() use ($app)  {
+				$param = json_decode($app->request->getBody());
+				$id = $param->id;
+				$firstname = $param->firstname;
+				$name = $param->name;
+				$email = $param->email;
+				if (!empty($id)) {
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+					$statement = $pdo->prepare("INSERT INTO `user`(`prenom`,`nom`,`email`) VALUES (?,?,?) WHERE id=$id");
+					$statement->execute(array($firstname,$name,$email));
+					$row["message"] = "Bienvenue";
+					echoResponse(200, $row);
+				}
+				else {
+					$row["message"] = "Le formulaire doit etre complet";
+					echoResponse(404, $row);
+				}
+
+			});
+
 			$app->post('/login',function() use ($app)  {
 				$param = json_decode($app->request->getBody());
 	  		$email = $param->email;

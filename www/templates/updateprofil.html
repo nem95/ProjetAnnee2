@@ -1,0 +1,36 @@
+<ion-view>
+    <ion-content  ng-controller="profilController" ng-init="loadProfilCu();">
+
+        <div class="container-fluid nopadding">
+            <h2 class="text-center mg-top20">Modifier son Profil</h2>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <h3>Prénom :</h3>
+                    <input type="text" value="" placeholder="Prénom" class="form-control" id="firstname" ng-model="pageProfil[0].prenom"/>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <h3>Nom :</h3>
+                    <input type="text" value="" placeholder="Nom" class="form-control" id="name" ng-model="pageProfil[0].nom"/>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <h3>Email :</h3>
+                    <input type="text" value="" placeholder="Email" class="form-control" id="email" ng-model="pageProfil[0].email"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <h3>Mot de passe :</h3>
+                    <a ui-sref="updatemdp" class="btn btn-raised btn-primary "> Modifier</a>
+                </div>
+            </div>
+            <button type="submit" ng-click="updateProfil()" class="btn btn-raised btn-primary btn-round btn-block">Modifier</button>
+        </div>
+
+    </ion-content>
+</ion-view>

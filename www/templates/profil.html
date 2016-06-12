@@ -3,6 +3,8 @@
 
     <div class="container-fluid nopadding">
         <div class="col-md-12 nopadding back-profil">
+
+
             <img src="../img/back-profil.jpg" alt="profil-pic" class="img-couv">
             <div class="vcenter">
                 <img src="../img/default-user.png" alt="avatar" class="avatar  img-responsive center-block">
@@ -11,28 +13,27 @@
         </div>
     </div>
       <div class="container-fluid">
-          <div class="row">
-              <section class="tab" ng-controller="TabController as tab">
-                  <ul class="nav nav-pills">
-                      <li ng-class="{ active: tab.isSet(1) }">
-                          <a href ng-click="tab.setTab(1)">Profile</a></li>
-                      <li ng-class="{ active: tab.isSet(2) }">
-                          <a href ng-click="tab.setTab(2)">Historique</a></li>
-                      <li ng-class="{ active: tab.isSet(3) }">
-                          <a href ng-click="tab.setTab(3)">Amis</a></li>
-                  </ul>
-                  <div ng-show="tab.isSet(1)">
-                      <blockquote>{{pageProfil[0].prenom}} {{pageProfil[0].nom}}</blockquote>
-                  </div>
-                  <div ng-show="tab.isSet(2)">
-                      <blockquote></blockquote>
-                  </div>
-                  <div ng-show="tab.isSet(3)">
-                      <h4>Reviews</h4>
-                  </div>
-              </section>
-
-          </div>
+                  <section class="tab" ng-controller="TabController as tab">
+                      <ul class="nav nav-pills">
+                          <li ng-class="{ active: tab.isSet(1) }">
+                              <a href ng-click="tab.setTab(1)">Profile</a></li>
+                          <li ng-class="{ active: tab.isSet(2) }">
+                              <a href ng-click="tab.setTab(2)">Historique</a></li>
+                          <li ng-class="{ active: tab.isSet(3) }">
+                              <a href ng-click="tab.setTab(3)">Amis</a></li>
+                      </ul>
+                      <div ng-show="tab.isSet(1)">
+                          <a ui-sref="updateprofil"><i class="fa fa-cogs fa-2x pull-right " aria-hidden="true"></i></a>
+                          <blockquote>Prénom: {{pageProfil[0].prenom}}</blockquote>
+                          <blockquote>Nom: {{pageProfil[0].nom}}</blockquote>
+                          <blockquote>E-mail: {{pageProfil[0].email}}</blockquote>
+                      </div>
+                      <div ng-show="tab.isSet(2)">
+                          <blockquote></blockquote>
+                      </div>
+                      <div ng-show="tab.isSet(3)">
+                      </div>
+                  </section>
       </div>
 
   </ion-content>	

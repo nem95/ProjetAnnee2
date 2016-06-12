@@ -51,3 +51,10 @@
 	-o-filter: brightness(50%);
 
 }
+.profil-opt{
+	z-index: 999;
+	position: absolute;
+	color: white;
+	right: 10px;
+	top: 10px;
+}

@@ -141,7 +141,22 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
           });
       };
 
+    $scope.updateProfil= function(data){
+        var param = {
+            id : $scope.$storage.currentUser[0].id,
+            firstname : document.getElementById("firstname").value,
+            name      : document.getElementById("name").value,
+            email     : document.getElementById("email").value,
+        }
+        console.log(param);
+        //envoi du formulaire pour l'ajout de tache a faire
+        $http.post(BaseUrl + "updateUser", param)
+            .success(function(data) { console.log(data.message);(data.message);
+                $location.path("profil/{{user.id}}")
 
+            });
+
+    }
 
   })
 
