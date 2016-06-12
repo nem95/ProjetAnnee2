@@ -82,3 +82,31 @@ text-align: center;
 .date-event{
   float: right;
 }
+.side-profil-content{
+    margin-left:2.5em;
+}
+
+.side-profil-content img{
+    margin-left: 2.5em;
+}
+.nopadding{
+    padding: 0 !important;
+}
+.vcenter{
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0) scale(1.0, 1.0);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.nav-pills li{
+   margin-right: 0.9em;
+}
+.nav-pills li:last-child{
+    margin-right: 0px;
+}
+.mg-top20{
+    margin-top: 20px !important;
+}

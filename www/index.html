@@ -69,10 +69,15 @@
             </ion-nav-view>
 
         </ion-side-menu-content>
-    <ion-side-menu side="left" ng-controller="loginController">
+    <ion-side-menu side="left" ng-controller="profilController">
         <ion-list>
-          <ion-item menu-close="" ui-sref="home">
-            {{$storage.currentUser[0].email}}
+          <ion-item  menu-close="">
+            <div class="col-md-12  text-center">
+              <a href="/#/profil/{{user.id}}" ng-click="loadProfilCu({{user.id}});">
+              <img src="../img/default-user.png" alt="avatar" class=" center-block avatar">
+              <p>{{$storage.currentUser[0].email}}</p>
+              </a>
+            </div>
           </ion-item>
           <ion-item menu-close="" ui-sref="home">
             Home

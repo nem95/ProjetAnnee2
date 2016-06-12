@@ -18,12 +18,60 @@
 				$password = $param->password;
 
 				if (!empty($firstname) && !empty($name) && !empty($email) && !empty($password)) {
-					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 					$statement = $pdo->prepare("INSERT INTO `user`(`prenom`,`nom`,`email`,`password`) VALUES (?,?,?,?)");
 					$statement->execute(array($firstname,$name,$email,$password));
 					$row["message"] = "Bienvenue";
 					echoResponse(200, $row);
 				}else {
+					$row["message"] = "Le formulaire doit etre complet";
+					echoResponse(404, $row);
+				}
+
+			});
+			$app->post('/getProfilCu',function() use ($app)  {
+				$param = json_decode($app->request->getBody());
+				$id = $param->id;
+				if((isset($id)))
+				{
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+					$statement = $pdo->prepare("SELECT * FROM user WHERE id = $id");
+					$statement->execute();
+					$profil = array();
+					$profil = $statement->fetchAll(PDO::FETCH_ASSOC);
+					$row["message"] = "BIEN AFFICHER";
+					echoResponse(200, $profil);
+				}
+			});
+			$app->post('/getUser',function() use ($app)  {
+				$param = json_decode($app->request->getBody());
+				$id = $param->id;
+				if((isset($id)))
+				{
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+					$statement = $pdo->prepare("SELECT * FROM user WHERE id = $id");
+					$statement->execute();
+					$profil = array();
+					$profil = $statement->fetchAll(PDO::FETCH_ASSOC);
+					$row["message"] = "BIEN AFFICHER";
+					echoResponse(200, $profil);
+				}
+			});
+
+			$app->post('/updateUser', function() use ($app)  {
+				$param = json_decode($app->request->getBody());
+				$id = $param->id;
+				$firstname = $param->firstname;
+				$name = $param->name;
+				$email = $param->email;
+				if (!empty($id)) {
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+					$statement = $pdo->prepare("INSERT INTO `user`(`prenom`,`nom`,`email`) VALUES (?,?,?) WHERE id=$id");
+					$statement->execute(array($firstname,$name,$email));
+					$row["message"] = "Bienvenue";
+					echoResponse(200, $row);
+				}
+				else {
 					$row["message"] = "Le formulaire doit etre complet";
 					echoResponse(404, $row);
 				}
@@ -36,7 +84,7 @@
 				$password = $param->password;
     		if((isset($email)) && (isset($password)))
       	{
-					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 			 		$result = $pdo->prepare("SELECT * FROM user WHERE email = '$email' AND password = '$password'");
 					$result->execute();
 			 		$user = array();
@@ -59,23 +107,19 @@
 			$lieu = $param->lieu;
 			$depart = $param->depart;
 			$arrivee = $param->arrivee;
-			$description = $param->description;
 			$date = $param->date;
-			$place = 12;
-			$time=date_create();
-			$today = date_format($time,"Y/m/d H:i:s");//date_timestamp_get($date);
 			$var = 0;
 
 			if ($lieu == '') {
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `depart`, `arrivee`,`description`, `date`, `nb_participant`, `add_at`) VALUES (?,?,?,?,?,?,?,?,?)");
-				$statement->execute(array($id_orga,$titre,$activity,$depart,$arrivee,$description,$date,$place,$today));
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `depart`, `arrivee`, `date`) VALUES (?,?,?,?,?,?)");
+				$statement->execute(array($id_orga,$titre,$activity,$depart,$arrivee,$date));
 				$row["message"] = "Le message est bien envoyer.";
 				echoResponse(200, $row);
 			}elseif($depart == '' && $arrivee == '') {
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `description`, `date`, `nb_participant`, `add_at`) VALUES (?,?,?,?,?,?,?,?)");
-				$statement->execute(array($id_orga,$titre,$activity,$lieu,$description,$date,$place,$today));
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
+				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
 				$row["message"] = "Le message est bien envoyer.";
 				echoResponse(200, $row);
 			}else {
@@ -85,8 +129,8 @@
 		});
 
 		$app->get('/Events', function()  {
-			$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-			$statement = $pdo->prepare("SELECT * FROM event ORDER BY add_at DESC ");
+			$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
+			$statement = $pdo->prepare("SELECT * FROM event");
 			$statement->execute();
 			$event = array();
 			$event = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -99,12 +143,13 @@
 			}
 		});
 
+
 		$app->post('/deleteEvent',function() use ($app)  {
 			$param = json_decode($app->request->getBody());
 			$id = $param->id;
 			if((isset($id)))
 			{
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$result = $pdo->prepare("DELETE FROM event WHERE id = $id");
 				$result->execute();
 				$row["message"] = "Ce favori a bien été supprimé";
@@ -115,13 +160,14 @@
 		$app->post('/getEvent',function() use ($app)  {
 			$param = json_decode($app->request->getBody());
 			$id = $param->id;
-			if(!empty($id))
+			if((isset($id)))
 			{
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$statement = $pdo->prepare("SELECT * FROM event WHERE id = $id");
 				$statement->execute();
 				$event = array();
 				$event = $statement->fetchAll(PDO::FETCH_ASSOC);
+				$row["message"] = "BIEN AFFICHER";
 				echoResponse(200, $event);
 			}
 		});
@@ -149,7 +195,7 @@
 			    }
 			}
 			if ($var == 0) {
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
 				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
 				$row["message"] = "Le message est bien envoyer.";

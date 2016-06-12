@@ -40,10 +40,22 @@ angular.module('myApp', ['ionic','HomeController'])
     url: '/login',
     templateUrl: 'templates/login.html'
   })
+  $stateProvider.state('updateprofil', {
+    url: '/updateprofil',
+    templateUrl: 'templates/updateprofil.html'
+  })
+  $stateProvider.state('updatemdp', {
+    url: '/updatemdp',
+    templateUrl: 'templates/updatemdp.html'
+  })
 
   $stateProvider.state('profil', {
-    url: '/profil',
+    url: '/profil/:id',
     templateUrl: 'templates/profil.html'
+  })
+  $stateProvider.state('user', {
+    url: '/user-profil/:id',
+    templateUrl: 'templates/user-profil.html'
   })
 
   $stateProvider.state('event_create', {
