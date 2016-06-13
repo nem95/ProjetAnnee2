@@ -20,7 +20,8 @@
             <span><b>Description : </b></span><br>
             {{pageEvent[0].description}}
           </p>
-          <button class="btn btn-raised btn-primary">Participer</button>
+          <button class="btn btn-raised btn-primary" ng-click='participe();' ng-hide="placeLeft[0].counter == pageEvent[0].nb_participant || getPlace[0].place > 0"><b>Participer</b> {{placeLeft[0].counter}}/{{pageEvent[0].nb_participant}} <i class="fa fa-users" aria-hidden="true"></i></button>
+          <button class="btn btn-raised btn-primary disabled" ng-show="placeLeft[0].counter == pageEvent[0].nb_participant || getPlace[0].place > 0"><b>Complet</b> {{placeLeft[0].counter}}/{{pageEvent[0].nb_participant}} <i class="fa fa-users" aria-hidden="true"></i></button>
 
           <p class="center">
             <span><b >Participants</b></span>

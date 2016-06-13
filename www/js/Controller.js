@@ -154,8 +154,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
         //envoi du formulaire pour l'ajout de tache a faire
         $http.post(BaseUrl + "updateUser", param)
             .success(function(data) { console.log(data.message);(data.message);
-                $location.path("profil/{{user.id}}")
-
+                $location.path("profil/{{user.id}}");
             });
 
     }
@@ -193,6 +192,11 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
       //WAMP
       //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
 
+      $scope.$storage = $localStorage.$default({
+        liste:'',
+        currentUser:'',
+      });
+
     $scope.reloadRoute = function() {
       $window.location.reload(true);
     }
@@ -210,7 +214,8 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
       console.log($stateParams.id);
 
         var param = {
-                  id : $stateParams.id
+                  id : $stateParams.id,
+                  id_user : $scope.$storage.currentUser[0].id,
                   }
         console.log(param);
 
@@ -218,7 +223,58 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
             $scope.pageEvent = data;
             console.log($scope.pageEvent[0].title);
 
+            $http.post(BaseUrl + "placeLeft", param).success(function (data) {
+                $scope.placeLeft = data;
+                console.log($scope.placeLeft[0].counter);
+                $scope.places = $scope.pageEvent[0].nb_participant - $scope.placeLeft[0].counter;
+                console.log($scope.places);
+            });
 
+            $http.post(BaseUrl + "getPlace", param).success(function (data) {
+                $scope.getPlace = data;
+                console.log($scope.getPlace[0].place);
+            });
+        });
+    };
+
+    $scope.participe = function(data){
+      console.log($stateParams.id);
+        var param = {
+                  id_event : $stateParams.id,
+                  id_user : $scope.$storage.currentUser[0].id,
+                  name_user : $scope.$storage.currentUser[0].nom,
+                  firstname_user : $scope.$storage.currentUser[0].prenom,
+                  }
+        console.log(param);
+        
+        $http.post(BaseUrl + "participe", param)
+          .success(function(response) {
+            console.log('ookook');
+            console.log(response);(response.message);
+
+            var param = {
+                      id : $stateParams.id,
+                      id_user : $scope.$storage.currentUser[0].id,
+                      }
+            console.log(param);
+
+            $http.post(BaseUrl + "getEvent", param).success(function (data) {
+                $scope.pageEvent = data;
+                console.log($scope.pageEvent[0].title);
+
+                $http.post(BaseUrl + "placeLeft", param).success(function (data) {
+                    $scope.placeLeft = data;
+                    console.log($scope.placeLeft[0].counter);
+                    $scope.places = $scope.pageEvent[0].nb_participant - $scope.placeLeft[0].counter;
+                    console.log($scope.places);
+
+                });
+
+                $http.post(BaseUrl + "getPlace", param).success(function (data) {
+                    $scope.getPlace = data;
+                    console.log($scope.getPlace[0].place);
+                });
+            })
         });
     };
 

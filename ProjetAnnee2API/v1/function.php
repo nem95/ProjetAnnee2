@@ -178,6 +178,52 @@
 			}
 		});
 
+		$app->post('/participe', function() use ($app)  {
+			$param = json_decode($app->request->getBody());
+			$id_event = $param->id_event;
+			$id_user = $param->id_user;
+			$name_user = $param->name_user;
+			$firstname_user = $param->firstname_user;
+
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$statement = $pdo->prepare("INSERT INTO `participants`(`id_event`,`id_user`,`name_user`,`firstname_user`) VALUES (?,?,?,?)");
+				$statement->execute(array($id_event,$id_user,$name_user,$firstname_user));
+				$row["message"] = "Participation enrengistrer";
+				echoResponse(200, $row);
+
+		});
+
+		$app->post('/placeLeft',function() use ($app)  {
+			$param = json_decode($app->request->getBody());
+			$id = $param->id;
+
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$statement = $pdo->prepare("SELECT COUNT(*) as counter  FROM participants WHERE id_event = $id ");
+				$statement->execute();
+				$event = array();
+				$event = $statement->fetchAll(PDO::FETCH_ASSOC);
+				$row["message"] = "BIEN AFFICHER";
+				echoResponse(200, $event);
+
+		});
+
+		$app->post('/getPlace',function() use ($app)  {
+			$param = json_decode($app->request->getBody());
+			$id = $param->id;
+			$id_user = $param->id_user;
+			if((isset($id)))
+			{
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$statement = $pdo->prepare("SELECT COUNT(*) as place FROM participants WHERE id_user = $id_user AND id_event = $id ");
+				$statement->execute();
+				$event = array();
+				$event = $statement->fetchAll(PDO::FETCH_ASSOC);
+				$row["message"] = "BIEN AFFICHER";
+				echoResponse(200, $event);
+			}
+		});
+
+
 		$app->post('/adresse', function() use ($app)  {
 			$param = json_decode($app->request->getBody());
 			$id_orga = $param->id_orga;
