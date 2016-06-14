@@ -51,7 +51,7 @@
 				$id = $param->id;
 				if((isset($id)))
 				{
-					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 					$statement = $pdo->prepare("SELECT * FROM user WHERE id = $id");
 					$statement->execute();
 					$profil = array();
@@ -71,7 +71,7 @@
 				$age = $param->age;
 				$ville = $param->ville;
 				if (!empty($id)) {
-					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 					//$statement = $pdo->prepare("UPDATE user SET `user`(`prenom`,`nom`,`email`) VALUES (?,?,?) WHERE id = $id");
 					$statement = $pdo->prepare("UPDATE user SET prenom = :firstname, nom = :name, email = :email,ville = :ville, age = :age, sport = :sport WHERE id = :id");
 					$statement->execute([
@@ -148,13 +148,13 @@
 			$var = 0;
 
 			if ($lieu == '') {
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `depart`, `arrivee`, `date`) VALUES (?,?,?,?,?,?)");
 				$statement->execute(array($id_orga,$titre,$activity,$depart,$arrivee,$date));
 				$row["message"] = "Le message est bien envoyer.";
 				echoResponse(200, $row);
 			}elseif($depart == '' && $arrivee == '') {
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
 				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
 				$row["message"] = "Le message est bien envoyer.";
@@ -166,7 +166,7 @@
 		});
 
 		$app->get('/Events', function()  {
-			$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+			$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 			$statement = $pdo->prepare("SELECT * FROM event");
 			$statement->execute();
 			$event = array();
@@ -245,7 +245,7 @@
 			if((isset($id)))
 			{
 				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-				$statement = $pdo->prepare("SELECT COUNT(*) as place FROM participants WHERE id_user = $id_user AND id_event = $id ");
+				$statement = $pdo->prepare("SELECT COUNT(*) as place FROM particip WHERE id_user = $id_user AND id_event = $id ");
 				$statement->execute();
 				$event = array();
 				$event = $statement->fetchAll(PDO::FETCH_ASSOC);

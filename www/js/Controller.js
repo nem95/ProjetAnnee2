@@ -105,6 +105,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
       //WAMP
      //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
 
+
       $scope.$storage = $localStorage.$default({
           liste:'',
           currentUser:'',
@@ -213,6 +214,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
       var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
       //WAMP
      //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
+
 
       $scope.$storage = $localStorage.$default({
         liste:'',
@@ -425,10 +427,12 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
   })
 
   .controller("eventController", function($scope, $location, $state, $ionicModal, $http, $localStorage, $ionicHistory, $window){
+
      //MAMP
      var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
      //WAMP
      //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
+
         $ionicHistory.nextViewOptions({
            disableBack: true
          });
