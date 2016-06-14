@@ -18,7 +18,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
     //MAMP
     var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
     //WAMP
-    //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
+   //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
 
     $ionicHistory.nextViewOptions({
        disableBack: true
@@ -46,7 +46,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
       //MAMP
       var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
       //WAMP
-      //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
+     //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
 
     $scope.$storage = $localStorage.$default({
         liste:'',
@@ -103,7 +103,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
       //MAMP
       var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
       //WAMP
-      //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
+     //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
 
       $scope.$storage = $localStorage.$default({
           liste:'',
@@ -126,8 +126,11 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
 
           $http.post(BaseUrl + "getProfilCu", param).success(function (data) {
               $scope.pageProfil = data;
-              //console.log($scope.pageProfil);
+              console.log($scope.pageProfil[0].sport)
           });
+
+
+
       };
       $scope.loadProfil = function(data){
           console.log($stateParams.id);
@@ -149,15 +152,34 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
             firstname : document.getElementById("firstname").value,
             name      : document.getElementById("name").value,
             email     : document.getElementById("email").value,
+            age    : document.getElementById("age").value,
+            ville     : document.getElementById("ville").value,
+            sport     : document.getElementById("sport").value,
         }
         console.log(param);
         //envoi du formulaire pour l'ajout de tache a faire
         $http.post(BaseUrl + "updateUser", param)
             .success(function(data) { console.log(data.message);(data.message);
-                $location.path("profil/{{user.id}}");
+                event.preventDefault();
+                $location.path("profil/");
             });
 
     }
+      $scope.updateMdp= function(data){
+          var param = {
+              id : $scope.$storage.currentUser[0].id,
+             password : document.getElementById("password").value,
+              passwordconfirmation: document.getElementById("passwordconfirmation").value,
+          }
+          console.log(param);
+          //envoi du formulaire pour l'ajout de tache a faire
+          $http.post(BaseUrl + "updateMdp", param)
+              .success(function(data) { console.log(data.message);(data.message);
+                      event.preventDefault();
+                  $location.path("profil/");
+              });
+
+      }
 
   })
 
@@ -190,7 +212,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
       //MAMP
       var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
       //WAMP
-      //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
+     //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
 
       $scope.$storage = $localStorage.$default({
         liste:'',
@@ -403,10 +425,10 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
   })
 
   .controller("eventController", function($scope, $location, $state, $ionicModal, $http, $localStorage, $ionicHistory, $window){
-      //MAMP
-      var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
-      //WAMP
-      //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
+     //MAMP
+     var BaseUrl = "http://localhost:8888/projetannee2/ProjetAnnee2API/v1/";
+     //WAMP
+     //var BaseUrl = "http://localhost/projetannee2/ProjetAnnee2API/v1/";
         $ionicHistory.nextViewOptions({
            disableBack: true
          });

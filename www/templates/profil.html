@@ -13,7 +13,7 @@
         </div>
     </div>
       <div class="container-fluid">
-                  <section class="tab" ng-controller="TabController as tab">
+                  <div class="tab centered-pills" ng-controller="TabController as tab">
                       <ul class="nav nav-pills">
                           <li ng-class="{ active: tab.isSet(1) }">
                               <a href ng-click="tab.setTab(1)">Profile</a></li>
@@ -21,19 +21,24 @@
                               <a href ng-click="tab.setTab(2)">Historique</a></li>
                           <li ng-class="{ active: tab.isSet(3) }">
                               <a href ng-click="tab.setTab(3)">Amis</a></li>
+                          <a ui-sref="updateprofil"><i class="fa fa-cogs fa-2x pull-right " aria-hidden="true"></i></a>
                       </ul>
                       <div ng-show="tab.isSet(1)">
-                          <a ui-sref="updateprofil"><i class="fa fa-cogs fa-2x pull-right " aria-hidden="true"></i></a>
                           <blockquote>Prénom: {{pageProfil[0].prenom}}</blockquote>
                           <blockquote>Nom: {{pageProfil[0].nom}}</blockquote>
                           <blockquote>E-mail: {{pageProfil[0].email}}</blockquote>
+                          <blockquote ng-show="pageProfil[0].age !=' '">Age: {{pageProfil[0].age}}</blockquote>
+                          <blockquote ng-show="pageProfil[0].ville !=' '">Ville: {{pageProfil[0].ville}}</blockquote>
+                          <blockquote ng-show="pageProfil[0].sport !=' '">Activité: {{pageProfil[0].sport}}</blockquote>
+                          <a ng-hide="pageProfil[0].age !=' ' && pageProfil[0].ville !=' ' && pageProfil[0].sport !=' ' " ui-sref="updateprofil"><button  class="btn btn-raised btn-primary btn-round btn-block">
+                             Compléter Profil</button></a>
                       </div>
                       <div ng-show="tab.isSet(2)">
                           <blockquote></blockquote>
                       </div>
                       <div ng-show="tab.isSet(3)">
                       </div>
-                  </section>
+                  </div>
       </div>
 
   </ion-content>	

@@ -58,3 +58,20 @@
 	right: 10px;
 	top: 10px;
 }
+
+.centered-pills {
+	text-align:center;
+	margin-top: 30px
+}
+.centered-pills ul.nav-pills {
+	display:inline-block; }
+.centered-pills li {
+	display:inline;
+}
+.centered-pills li a {
+	float:left;
+}
+
+button a  {
+	color: white;
+}

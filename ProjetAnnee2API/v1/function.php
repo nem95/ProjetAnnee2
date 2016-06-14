@@ -7,18 +7,20 @@
 	//$pdo = new pdo("mysql:dbname=voixture;host=localhost","root","");
 
 	$bddLocal = "projetannee2";
+	//"root" = "root";
 
 	/* ############################################################ VOIXTURE ############################################################################# */
 
-			$app->post('/addUser', function() use ($app)  {
+			$app->post('/addUser', function() use ($app, $mpd)  {
 				$param = json_decode($app->request->getBody());
 				$firstname = $param->firstname;
 				$name = $param->name;
 				$email = $param->email;
 				$password = $param->password;
 
+
 				if (!empty($firstname) && !empty($name) && !empty($email) && !empty($password)) {
-					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root", "root");
 					$statement = $pdo->prepare("INSERT INTO `user`(`prenom`,`nom`,`email`,`password`) VALUES (?,?,?,?)");
 					$statement->execute(array($firstname,$name,$email,$password));
 					$row["message"] = "Bienvenue";
@@ -29,12 +31,13 @@
 				}
 
 			});
-			$app->post('/getProfilCu',function() use ($app)  {
+			$app->post('/getProfilCu',function() use ($app, $mpd)  {
 				$param = json_decode($app->request->getBody());
 				$id = $param->id;
+
 				if((isset($id)))
 				{
-					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root", "root");
 					$statement = $pdo->prepare("SELECT * FROM user WHERE id = $id");
 					$statement->execute();
 					$profil = array();
@@ -64,16 +67,44 @@
 				$firstname = $param->firstname;
 				$name = $param->name;
 				$email = $param->email;
+				$sport = $param->sport;
+				$age = $param->age;
+				$ville = $param->ville;
 				if (!empty($id)) {
 					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
 					//$statement = $pdo->prepare("UPDATE user SET `user`(`prenom`,`nom`,`email`) VALUES (?,?,?) WHERE id = $id");
-					$statement = $pdo->prepare("UPDATE user SET prenom = :firstname, nom = :name, email = :email WHERE id = :id");
+					$statement = $pdo->prepare("UPDATE user SET prenom = :firstname, nom = :name, email = :email,ville = :ville, age = :age, sport = :sport WHERE id = :id");
 					$statement->execute([
-					          	':firstname' => $firstname,
-					            ':name' => $name,
+											':firstname' => $firstname,
+											':name' => $name,
 											':email' => $email,
-					          	':id' => $id,
+											':id' => $id,
+											':sport' => $sport,
+											':ville' => $ville,
+											':age' => $age,
 					          ]);					//$statement->execute(array($firstname,$name,$email));
+					$row["message"] = "Bienvenue";
+					echoResponse(200, $row);
+				}
+				else {
+					$row["message"] = "Le formulaire doit etre complet";
+					echoResponse(404, $row);
+				}
+
+			});
+			$app->post('/updateMdp', function() use ($app)  {
+				$param = json_decode($app->request->getBody());
+				$id = $param->id;
+				$password = $param->password;
+				$passwordconfirmation = $param->passwordconfirmation;
+				if (!empty($password) && (!empty($passwordconfirmation) && ($password===$passwordconfirmation))) {
+					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+					//$statement = $pdo->prepare("UPDATE user SET `user`(`prenom`,`nom`,`email`) VALUES (?,?,?) WHERE id = $id");
+					$statement = $pdo->prepare("UPDATE user SET password = :password WHERE id = :id");
+					$statement->execute([
+						':password' => $password,
+						':id' => $id,
+					]);					//$statement->execute(array($firstname,$name,$email));
 					$row["message"] = "Bienvenue";
 					echoResponse(200, $row);
 				}
@@ -279,7 +310,7 @@
 			    }
 			}
 			if ($var == 0) {
-				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 				$statement = $pdo->prepare("INSERT INTO `event`(`id_orga`,`title`, `activity`, `lieu`, `date`) VALUES (?,?,?,?,?)");
 				$statement->execute(array($id_orga,$titre,$activity,$lieu,$date));
 				$row["message"] = "Le message est bien envoyer.";
