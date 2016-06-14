@@ -1,34 +1,41 @@
-<ion-view view-title='Inscription' > 
-  <ion-content ng-controller="singinController" class="padding">
-    <div class="col-md-12"><h1>S'inscrire</h1></div>
-      <div class="col-sm-4">
-        <div class="form-group">
+<ion-view >
+  <div class="backgroundappli">
+    <ion-content ng-controller="singinController" class="padding">
+      <div class="col-md-12 vcenter2">
+        <div class="col-sm-4">
+          <div class="form-group">
             <input type="text" value="" placeholder="Prénom" class="form-control" id="firstname"/>
+          </div>
         </div>
-      </div>
 
-      <div class="col-sm-4">
-        <div class="form-group">
+        <div class="col-sm-4">
+          <div class="form-group">
             <input type="text" value="" placeholder="Nom" class="form-control" id="name" />
+          </div>
         </div>
-      </div>
 
-      <div class="col-sm-4">
-        <div class="form-group">
+        <div class="col-sm-4">
+          <div class="form-group">
             <input type="text" value="" placeholder="Email" class="form-control" id="email"/>
+          </div>
         </div>
-      </div>
 
-      <div class="col-sm-4">
-        <div class="form-group">
+        <div class="col-sm-4">
+          <div class="form-group">
             <input type="password" value="" placeholder="Password" class="form-control" id="password"/>
+          </div>
         </div>
+        <div class="col-md-4 center-block text-center">
+          <button type="submit" ng-click="signUp();" class="btn btn-raised btn-primary btn-round ">S'inscrire</button>
+          <a ui-sref="login"><strong>Or connect</strong></a>
+        </div>
+
+
       </div>
 
-      <button type="submit" ng-click="signUp();" class="btn btn-raised btn-primary btn-round btn-block">Register</button>
-
-      <a ui-sref="login">Or connect</a>
 
 
-  </ion-content>
+    </ion-content>
+  </div>
+
 </ion-view>

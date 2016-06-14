@@ -107,3 +107,40 @@ text-align: center;
 .mg-top20{
     margin-top: 20px !important;
 }
+.backgroundappli{
+    background-image: url("../img/photo-1434626982825-b030fb94f5beflitre-compressor.jpg");
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(255,255,255, 1);
+
+    height:100%;
+
+}
+.title-left{
+    display: none;
+}
+.vcenter2 {
+    -webkit-backface-visibility: hidden !important;
+    -webkit-transform: translateZ(0) scale(1.0, 1.0) !important;
+    position: absolute !important;
+    top: 35%;
+    left: 0%;
+    width: 100%;
+}
+input::-webkit-input-placeholder {
+    color: white !important;
+}
+input::-moz-placeholder {  /* Firefox 19+ */
+    color: white !important;
+}
+
+input:-ms-input-placeholder {
+    color: white !important;
+}
+input:focus::-webkit-input-placeholder {
+    opacity: 0.5;
+}
+.form-control:focus::-moz-placeholder {  /* Firefox 19+ */
+    opacity: 0.5;
+}

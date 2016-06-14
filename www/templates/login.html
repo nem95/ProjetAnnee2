@@ -1,22 +1,25 @@
-<ion-view view-title='login' hide-nav-bar="true">
-  <ion-content ng-controller="loginController" class="padding">
+<ion-view hide-nav-bar="true">
+    <div class="backgroundappli">
+  <ion-content ng-controller="loginController" >
 
 
 
-      <div class="col-sm-4">
-        <div class="form-group">
-            <input type="text" value="" placeholder="Email" class="form-control" id="email" />
+    <div class="col-md-12 vcenter2">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <input type="text" value="" placeholder="Email" class="form-control" id="email" />
+            </div>
         </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="form-group">
-            <input type="password" placeholder="Mot de passe" class="form-control" id="password"/>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <input type="password" placeholder="Mot de passe" class="form-control" id="password"/>
+            </div>
         </div>
-      </div>
+        <button type="button" ng-click="login();" class="btn btn-lg btn-primary btn-block">Login</button>
+    </div>
 
 
-
-      <button type="button" ng-click="login();" class="btn btn-lg btn-primary btn-block">Login</button>
 
   </ion-content>
+    </div>
 </ion-view>

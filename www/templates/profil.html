@@ -5,7 +5,7 @@
         <div class="col-md-12 nopadding back-profil">
 
 
-            <img src="../img/back-profil.jpg" alt="profil-pic" class="img-couv">
+            <img src="../img/bicycle-893214_960_720-compressor.jpg" alt="profil-pic" class="img-couv">
             <div class="vcenter">
                 <img src="../img/default-user.png" alt="avatar" class="avatar  img-responsive center-block">
                 <p class="profiltitle">{{pageProfil[0].prenom}} {{pageProfil[0].nom}}</p>
@@ -27,11 +27,13 @@
                           <blockquote>Prénom: {{pageProfil[0].prenom}}</blockquote>
                           <blockquote>Nom: {{pageProfil[0].nom}}</blockquote>
                           <blockquote>E-mail: {{pageProfil[0].email}}</blockquote>
-                          <blockquote ng-show="pageProfil[0].age !=' '">Age: {{pageProfil[0].age}}</blockquote>
+                          <blockquote ng-show="pageProfil[0].age !=' ' && pageProfil[0].age !=0">Age: {{pageProfil[0].age}}</blockquote>
                           <blockquote ng-show="pageProfil[0].ville !=' '">Ville: {{pageProfil[0].ville}}</blockquote>
                           <blockquote ng-show="pageProfil[0].sport !=' '">Activité: {{pageProfil[0].sport}}</blockquote>
-                          <a ng-hide="pageProfil[0].age !=' ' && pageProfil[0].ville !=' ' && pageProfil[0].sport !=' ' " ui-sref="updateprofil"><button  class="btn btn-raised btn-primary btn-round btn-block">
-                             Compléter Profil</button></a>
+                          <a ng-hide="pageProfil[0].age !=' ' && pageProfil[0].age !='0' && pageProfil[0].ville !=' ' && pageProfil[0].sport !=' ' " ui-sref="updateprofil">
+                              <button  class="btn btn-raised btn-primary btn-round btn-block">
+                             Compléter Profil</button>
+                          </a>
                       </div>
                       <div ng-show="tab.isSet(2)">
                           <blockquote></blockquote>
