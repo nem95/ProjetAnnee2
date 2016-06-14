@@ -126,8 +126,11 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
 
           $http.post(BaseUrl + "getProfilCu", param).success(function (data) {
               $scope.pageProfil = data;
-              //console.log($scope.pageProfil);
+              console.log($scope.pageProfil[0].sport)
           });
+
+
+
       };
       $scope.loadProfil = function(data){
           console.log($stateParams.id);
@@ -149,11 +152,15 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
             firstname : document.getElementById("firstname").value,
             name      : document.getElementById("name").value,
             email     : document.getElementById("email").value,
+            age    : document.getElementById("age").value,
+            ville     : document.getElementById("ville").value,
+            sport     : document.getElementById("sport").value,
         }
         console.log(param);
         //envoi du formulaire pour l'ajout de tache a faire
         $http.post(BaseUrl + "updateUser", param)
             .success(function(data) { console.log(data.message);(data.message);
+                event.preventDefault();
                 $location.path("profil/");
             });
 
@@ -162,12 +169,13 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
           var param = {
               id : $scope.$storage.currentUser[0].id,
              password : document.getElementById("password").value,
-              passwordconfirmation      : document.getElementById("passwordconfirmation").value,
+              passwordconfirmation: document.getElementById("passwordconfirmation").value,
           }
           console.log(param);
           //envoi du formulaire pour l'ajout de tache a faire
           $http.post(BaseUrl + "updateMdp", param)
               .success(function(data) { console.log(data.message);(data.message);
+                      event.preventDefault();
                   $location.path("profil/");
               });
 

@@ -64,15 +64,21 @@
 				$firstname = $param->firstname;
 				$name = $param->name;
 				$email = $param->email;
+				$sport = $param->sport;
+				$age = $param->age;
+				$ville = $param->ville;
 				if (!empty($id)) {
 					$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","");
 					//$statement = $pdo->prepare("UPDATE user SET `user`(`prenom`,`nom`,`email`) VALUES (?,?,?) WHERE id = $id");
-					$statement = $pdo->prepare("UPDATE user SET prenom = :firstname, nom = :name, email = :email WHERE id = :id");
+					$statement = $pdo->prepare("UPDATE user SET prenom = :firstname, nom = :name, email = :email,ville = :ville, age = :age, sport = :sport WHERE id = :id");
 					$statement->execute([
 					          	':firstname' => $firstname,
 					            ':name' => $name,
 								':email' => $email,
 					          	':id' => $id,
+								':sport' => $sport,
+								':ville' => $ville,
+								':age' => $age,
 					          ]);					//$statement->execute(array($firstname,$name,$email));
 					$row["message"] = "Bienvenue";
 					echoResponse(200, $row);
