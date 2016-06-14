@@ -223,6 +223,11 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
             $scope.pageEvent = data;
             console.log($scope.pageEvent[0].title);
 
+            $http.post(BaseUrl + "getParticipant", param).success(function (data) {
+                $scope.getParticipant = data;
+                console.log($scope.getParticipant);
+            });
+
             $http.post(BaseUrl + "placeLeft", param).success(function (data) {
                 $scope.placeLeft = data;
                 console.log($scope.placeLeft[0].counter);
@@ -246,7 +251,7 @@ angular.module("HomeController", ['ngStorage', 'nemLogging', 'ionic-datepicker']
                   firstname_user : $scope.$storage.currentUser[0].prenom,
                   }
         console.log(param);
-        
+
         $http.post(BaseUrl + "participe", param)
           .success(function(response) {
             console.log('ookook');

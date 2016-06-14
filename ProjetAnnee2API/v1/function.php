@@ -223,6 +223,38 @@
 			}
 		});
 
+		$app->post('/getParticipant',function() use ($app)  {
+			$param = json_decode($app->request->getBody());
+			$id = $param->id;
+			$id_user = $param->id_user;
+			if((isset($id)))
+			{
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$statement = $pdo->prepare("SELECT * FROM participants WHERE id_event = $id ");
+				$statement->execute();
+				$event = array();
+				$event = $statement->fetchAll(PDO::FETCH_ASSOC);
+				$row["message"] = "BIEN AFFICHER";
+				echoResponse(200, $event);
+			}
+		});
+
+		$app->post('/showParticipant',function() use ($app)  {
+			$param = json_decode($app->request->getBody());
+			$id = $param->id;
+			$id_user = $param->id_user;
+			if((isset($id)))
+			{
+				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
+				$statement = $pdo->prepare("SELECT * FROM user WHERE id_event = $id ");
+				$statement->execute();
+				$event = array();
+				$event = $statement->fetchAll(PDO::FETCH_ASSOC);
+				$row["message"] = "BIEN AFFICHER";
+				echoResponse(200, $event);
+			}
+		});
+
 
 		$app->post('/adresse', function() use ($app)  {
 			$param = json_decode($app->request->getBody());

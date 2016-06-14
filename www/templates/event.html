@@ -26,43 +26,26 @@
           <p class="center">
             <span><b >Participants</b></span>
           </p>
-          <table class="table">
-            <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th>Pseudo</th>
-                    <th>Statut</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="text-center">1</td>
-                    <td>Sch Mathafack</td>
-                    <td>Ami</td>
-                </tr>
-                <tr>
-                    <td class="text-center">2</td>
-                    <td>Théo </td>
-                    <td>Ami</td>
-                </tr>
-                <tr>
-                    <td class="text-center">3</td>
-                    <td>Thom's du 92</td>
-                    <td>Ami</td>
-                </tr>
-                <tr>
-                    <td class="text-center">4</td>
-                    <td>Jean</td>
-                    <td>Anonyme</td>
-                </tr>
-                <tr>
-                    <td class="text-center">5</td>
-                    <td>Naïm</td>
-                    <td>Ami</td>
-                </tr>
+            <table class="table">
+              <thead>
+                  <tr>
+                      <th class="text-center">#</th>
+                      <th>Pseudo</th>
+                      <th>Statut</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <div class="" ng-repeat="participants in getParticipant track by $index">
 
-            </tbody>
-        </table>
+                  <tr>
+                      <td class="text-center">{{$index + 1}}</td>
+                      <td>{{getParticipant.name_user}}</td>
+                      <td>Ami</td>
+                  </tr>
+                </div>
+
+              </tbody>
+          </table>
         </div>
 
     </ion-content>
