@@ -245,7 +245,7 @@
 			if((isset($id)))
 			{
 				$pdo = new pdo("mysql:dbname=projetannee2;host=localhost","root","root");
-				$statement = $pdo->prepare("SELECT COUNT(*) as place FROM particip WHERE id_user = $id_user AND id_event = $id ");
+				$statement = $pdo->prepare("SELECT COUNT(*) as place FROM participants WHERE id_user = $id_user AND id_event = $id ");
 				$statement->execute();
 				$event = array();
 				$event = $statement->fetchAll(PDO::FETCH_ASSOC);
