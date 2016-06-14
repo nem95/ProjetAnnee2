@@ -50,7 +50,7 @@ angular.module('myApp', ['ionic','HomeController'])
   })
 
   $stateProvider.state('profil', {
-    url: '/profil/:id',
+    url: '/profil/',
     templateUrl: 'templates/profil.html'
   })
   $stateProvider.state('user', {
